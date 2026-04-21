@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IUGB Library - BBA Courses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="courses-page">
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner">
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+            </div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-top">
+            <button class="btn-back" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>BBA Courses</h1>
+            <a href="premium.html" class="btn-premium-header">
+                <i class="fas fa-gem"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="home.html">Home</a> / <span>BBA Courses</span>
+    </div>
+
+    <!-- Courses Grid -->
+    <section class="courses-container">
+        <div class="course-card" onclick="goToCourseDetail('finance', 'Finance')">
+            <div class="course-icon finance">
+                <i class="fas fa-coins"></i>
+            </div>
+            <h3>Finance</h3>
+            <p>Financial Management & Investments</p>
+            <span class="course-books">14 books</span>
+            <span class="course-level">Advanced</span>
+        </div>
+
+        <div class="course-card" onclick="goToCourseDetail('marketing', 'Marketing')">
+            <div class="course-icon marketing">
+                <i class="fas fa-bullhorn"></i>
+            </div>
+            <h3>Marketing</h3>
+            <p>Strategies & Campaigns</p>
+            <span class="course-books">11 books</span>
+            <span class="course-level">Intermediate</span>
+        </div>
+
+        <div class="course-card" onclick="goToCourseDetail('management', 'Management')">
+            <div class="course-icon management">
+                <i class="fas fa-project-diagram"></i>
+            </div>
+            <h3>Management</h3>
+            <p>Leadership & Organization</p>
+            <span class="course-books">13 books</span>
+            <span class="course-level">Advanced</span>
+        </div>
+
+        <div class="course-card" onclick="goToCourseDetail('accounting', 'Accounting')">
+            <div class="course-icon accounting">
+                <i class="fas fa-calculator"></i>
+            </div>
+            <h3>Accounting</h3>
+            <p>Accounting & Audit</p>
+            <span class="course-books">12 books</span>
+            <span class="course-level">Intermediate</span>
+        </div>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>

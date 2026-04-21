@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IUGB Library - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="home-page">
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner">
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+            </div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-top">
+            <div class="logo-section">
+                <i class="fas fa-book-open"></i>
+                <h1>IUGB Library</h1>
+            </div>
+            <div class="header-actions">
+                <a href="premium.html" class="btn-premium-header" title="Premium Features">
+                    <i class="fas fa-gem"></i>
+                </a>
+                <button class="btn-logout" onclick="logout()" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+        <div class="user-welcome">
+            <p>Welcome back, <strong id="userName">Student</strong>! 👋</p>
+        </div>
+    </header>
+
+    <!-- Welcome Section with Animation -->
+    <section class="welcome-section">
+        <div class="welcome-content-wrapper">
+            <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=500&h=300&fit=crop" alt="Student studying" class="welcome-image">
+            <div class="welcome-content">
+                <h2>Welcome to IUGB Library</h2>
+                <p>Access comprehensive learning resources tailored for your academic success</p>
+                <div class="welcome-badges">
+                    <span class="badge"><i class="fas fa-book"></i> 150+ Books</span>
+                    <span class="badge"><i class="fas fa-users"></i> Active Community</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats with Animation -->
+    <section class="quick-stats">
+        <div class="stat-card" style="animation-delay: 0s;">
+            <i class="fas fa-book"></i>
+            <h3 id="booksCount">150+</h3>
+            <p>Available Books</p>
+        </div>
+        <div class="stat-card" style="animation-delay: 0.1s;">
+            <i class="fas fa-users"></i>
+            <h3>500+</h3>
+            <p>Active Students</p>
+        </div>
+        <div class="stat-card" style="animation-delay: 0.2s;">
+            <i class="fas fa-star"></i>
+            <h3>4.8</h3>
+            <p>Rating</p>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="programs-section">
+        <h2>Choose Your Program</h2>
+        <p class="section-subtitle">Select your field of study</p>
+        <div class="programs-grid">
+            <a href="bss-courses.html" class="program-card bss-card" onclick="setProgramType('bss')">
+                <div class="program-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>BSS</h3>
+                <p>Social Sciences</p>
+                <span class="arrow">→</span>
+            </a>
+            <a href="bba-courses.html" class="program-card bba-card" onclick="setProgramType('bba')">
+                <div class="program-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>BBA</h3>
+                <p>Business Administration</p>
+                <span class="arrow">→</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Featured Content -->
+    <section class="featured-section">
+        <h2>Featured Resources</h2>
+        <div class="featured-cards">
+            <div class="featured-card">
+                <i class="fas fa-lightbulb"></i>
+                <h3>Study Tips</h3>
+                <p>Master effective learning techniques</p>
+            </div>
+            <div class="featured-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Progress Tracking</h3>
+                <p>Monitor your learning journey</p>
+            </div>
+            <div class="featured-card">
+                <i class="fas fa-users"></i>
+                <h3>Community</h3>
+                <p>Connect with fellow students</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IUGB Library - Course Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="course-detail-page">
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner">
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+            </div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-top">
+            <button class="btn-back" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 id="courseTitle">Course Title</h1>
+            <a href="premium.html" class="btn-premium-header">
+                <i class="fas fa-gem"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Course Info Banner -->
+    <section class="course-info">
+        <div class="course-header-info">
+            <div class="course-icon-large" id="courseIcon">
+                <i class="fas fa-book"></i>
+            </div>
+            <h2 id="courseFullTitle">Course Title</h2>
+            <div class="course-stats">
+                <span><i class="fas fa-book"></i> <span id="bookCount">10</span> Books</span>
+                <span><i class="fas fa-star"></i> 4.8/5</span>
+                <span><i class="fas fa-users"></i> <span id="enrolledCount">250</span> Students</span>
+            </div>
+            <p class="course-description" id="courseDescription">Comprehensive learning materials for your academic success.</p>
+        </div>
+    </section>
+
+    <!-- Books List -->
+    <section class="books-container">
+        <h3>Learning Resources</h3>
+        <div class="books-filter">
+            <button class="filter-btn active" onclick="filterBooks('all')">All</button>
+            <button class="filter-btn" onclick="filterBooks('free')">Free</button>
+            <button class="filter-btn" onclick="filterBooks('premium')">Premium</button>
+        </div>
+        <div id="booksList" class="books-grid">
+            <!-- Books will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- Lock Notice for Premium Content -->
+    <div class="no-premium-notice" id="noPremiumNotice" style="display: none;">
+        <i class="fas fa-lock"></i>
+        <h3>Premium Content</h3>
+        <p>Unlock exclusive resources with premium membership</p>
+        <a href="premium.html" class="btn-primary">Upgrade to Premium</a>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

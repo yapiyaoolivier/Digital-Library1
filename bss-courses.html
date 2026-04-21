@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IUGB Library - BSS Courses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="courses-page">
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner">
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+            </div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-top">
+            <button class="btn-back" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>BSS Courses</h1>
+            <a href="premium.html" class="btn-premium-header">
+                <i class="fas fa-gem"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="home.html">Home</a> / <span>BSS Courses</span>
+    </div>
+
+    <!-- Courses Grid -->
+    <section class="courses-container">
+        <div class="course-card" onclick="goToCourseDetail('mathematics', 'Mathematics')">
+            <div class="course-icon mathematics">
+                <i class="fas fa-calculator"></i>
+            </div>
+            <h3>Mathematics</h3>
+            <p>Algebra, Geometry, Calculus</p>
+            <span class="course-books">12 books</span>
+            <span class="course-level">Beginner</span>
+        </div>
+
+        <div class="course-card" onclick="goToCourseDetail('met', 'Methods & Techniques')">
+            <div class="course-icon met">
+                <i class="fas fa-book-reader"></i>
+            </div>
+            <h3>MET</h3>
+            <p>Study Methods & Techniques</p>
+            <span class="course-books">8 books</span>
+            <span class="course-level">Beginner</span>
+        </div>
+
+        <div class="course-card" onclick="goToCourseDetail('cs', 'Computer Science')">
+            <div class="course-icon cs">
+                <i class="fas fa-laptop-code"></i>
+            </div>
+            <h3>Computer Science</h3>
+            <p>Programming & Applications</p>
+            <span class="course-books">15 books</span>
+            <span class="course-level">Intermediate</span>
+        </div>
+
+        <div class="course-card" onclick="goToCourseDetail('statistics', 'Statistics')">
+            <div class="course-icon statistics">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            <h3>Statistics</h3>
+            <p>Data Analysis</p>
+            <span class="course-books">10 books</span>
+            <span class="course-level">Intermediate</span>
+        </div>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>

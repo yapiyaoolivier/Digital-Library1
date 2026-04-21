@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IUGB Library - Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="premium-page">
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner">
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+            </div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-top">
+            <button class="btn-back" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Premium</h1>
+            <div class="placeholder"></div>
+        </div>
+    </header>
+
+    <!-- Premium Banner -->
+    <section class="premium-banner">
+        <div class="banner-animation">
+            <div class="banner-icon">
+                <i class="fas fa-crown"></i>
+            </div>
+        </div>
+        <h2>Unlock Premium Access</h2>
+        <p>Exclusive resources and unlimited learning opportunities</p>
+    </section>
+
+    <!-- Features Section -->
+    <section class="premium-features">
+        <h3>Premium Benefits</h3>
+        <div class="features-list">
+            <div class="feature-item">
+                <i class="fas fa-infinity"></i>
+                <h4>Unlimited Access</h4>
+                <p>All resources available</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-cloud-download-alt"></i>
+                <h4>Downloads</h4>
+                <p>Download for offline access</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-bookmark"></i>
+                <h4>Collections</h4>
+                <p>Create your own collections</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-history"></i>
+                <h4>Progress Tracking</h4>
+                <p>Save your learning journey</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-headphones"></i>
+                <h4>Premium Support</h4>
+                <p>Priority assistance 24/7</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-tablet-alt"></i>
+                <h4>Multi-Device</h4>
+                <p>Access from any device</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="premium-pricing">
+        <div class="pricing-card">
+            <div class="popular-badge">Most Popular</div>
+            <div class="price-badge">
+                <span class="currency">$</span>
+                <span class="amount">9.99</span>
+                <span class="period">/month</span>
+            </div>
+            <h3>Premium Monthly</h3>
+            <ul class="price-features">
+                <li><i class="fas fa-check"></i> Access all content</li>
+                <li><i class="fas fa-check"></i> Download resources</li>
+                <li><i class="fas fa-check"></i> 24/7 support</li>
+                <li><i class="fas fa-check"></i> Cancel anytime</li>
+                <li><i class="fas fa-check"></i> No hidden fees</li>
+            </ul>
+            <button class="btn-subscribe" onclick="subscribe()">
+                <i class="fas fa-gem"></i> Upgrade Now
+            </button>
+        </div>
+
+        <div class="pricing-card annual-card">
+            <div class="saving-badge">Save 30%</div>
+            <div class="price-badge">
+                <span class="currency">$</span>
+                <span class="amount">79.99</span>
+                <span class="period">/year</span>
+            </div>
+            <h3>Premium Yearly</h3>
+            <ul class="price-features">
+                <li><i class="fas fa-check"></i> Access all content</li>
+                <li><i class="fas fa-check"></i> Download resources</li>
+                <li><i class="fas fa-check"></i> 24/7 support</li>
+                <li><i class="fas fa-check"></i> Cancel anytime</li>
+                <li><i class="fas fa-check"></i> Free books & guides</li>
+            </ul>
+            <button class="btn-subscribe" onclick="subscribe()">
+                <i class="fas fa-gem"></i> Upgrade Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="premium-testimonials">
+        <h3>What Students Say</h3>
+        <div class="testimonials-grid">
+            <div class="testimonial">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p>"Premium saved my exams! Unlimited resources made studying so much easier."</p>
+                <span>- Sarah K., BBA 3rd Year</span>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p>"Everything I need in one place. Best investment for my studies!"</p>
+                <span>- Jean M., BSS 2nd Year</span>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p>"The downloads feature is amazing. I can study offline anywhere!"</p>
+                <span>- Marie D., BBA 1st Year</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Note -->
+    <section class="premium-note">
+        <p><i class="fas fa-info-circle"></i> Cancel anytime, no questions asked. Full money-back guarantee within 30 days.</p>
+    </section>
+
+    <!-- Signature -->
+    <a href="https://deerflow.tech" target="_blank" class="deerflow-signature">
+        <span class="deerflow-icon">✦</span>
+        <span class="deerflow-text">Deerflow</span>
+    </a>
+
+    <script src="app.js"></script>
+</body>
+</html>
