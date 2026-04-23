@@ -3526,6 +3526,80 @@ a:hover {
     .premium-card {
         padding: 20px;
     }
+
+    .welcome-section,
+    .featured-section,
+    .premium-note,
+    .resource-hero,
+    .resource-tools,
+    .resource-section,
+    .breadcrumb {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    .welcome-content-wrapper,
+    .featured-card,
+    .resource-hero,
+    .resource-card {
+        padding: 18px;
+    }
+
+    .welcome-content h2,
+    .programs-section h2,
+    .featured-section h2,
+    .resource-hero h2 {
+        font-size: 1.35rem;
+    }
+
+    .featured-cards,
+    .resource-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .resource-tools {
+        display: grid;
+        gap: 14px;
+    }
+
+    .book-search {
+        padding: 10px 14px;
+        gap: 10px;
+    }
+
+    .book-search input,
+    .resource-select select {
+        font-size: 16px;
+    }
+
+    .book-item:hover,
+    .featured-card:hover,
+    .course-card:hover {
+        transform: translateY(-6px);
+    }
+
+    .book-action {
+        flex-direction: column;
+    }
+
+    .book-action button,
+    .resource-card .btn-primary {
+        width: 100%;
+    }
+
+    .course-stats {
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    .course-stats span {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .header-top {
+        gap: 10px;
+    }
     
     .amount {
         font-size: 40px;
