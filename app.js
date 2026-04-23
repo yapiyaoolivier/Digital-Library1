@@ -173,6 +173,43 @@ function getAllBooks() {
     );
 }
 
+function applyScrollReveal(elements, stepDelay = 0.08) {
+    const items = Array.from(elements).filter(Boolean);
+    if (!items.length) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    items.forEach((element, index) => {
+        element.classList.add('scroll-reveal');
+        element.style.setProperty('--reveal-delay', `${index * stepDelay}s`);
+    });
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+        items.forEach(element => element.classList.add('is-visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -8% 0px'
+    });
+
+    items.forEach(element => observer.observe(element));
+}
+
+function initScrollReveal() {
+    applyScrollReveal(document.querySelectorAll(
+        '.welcome-section, .stat-card, .program-card, .featured-section, .featured-card, .course-card, .course-info, .book-item, .no-premium-notice, .premium-banner, .feature-item, .pricing-card, .testimonial, .premium-note, .resource-hero, .resource-tools, .resource-card'
+    ));
+}
+
 // ============================================
 // VALIDATION
 // ============================================
@@ -356,6 +393,8 @@ function renderBooksList(books) {
     books.forEach(book => {
         booksList.appendChild(createBookElement(book));
     });
+
+    applyScrollReveal(booksList.querySelectorAll('.book-item'));
 }
 
 function getFilteredBooks(courseId) {
@@ -577,6 +616,8 @@ function initSearchPage() {
         results.forEach(book => {
             resultsEl.appendChild(createSearchResultElement(book));
         });
+
+        applyScrollReveal(resultsEl.querySelectorAll('.book-item'));
     };
 
     searchInput.addEventListener('input', render);
@@ -635,6 +676,8 @@ function initPastPapersPage() {
             `;
             listEl.appendChild(card);
         });
+
+        applyScrollReveal(listEl.querySelectorAll('.resource-card'));
     };
 
     searchInput.addEventListener('input', render);
@@ -697,10 +740,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     setTimeout(() => {
-        document.querySelectorAll('.program-card, .course-card, .featured-card, .stat-card, .book-item, .resource-card').forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.1}s`;
-            card.style.animation = 'fadeIn 0.5s ease forwards';
-        });
+        initScrollReveal();
     }, 100);
 
     console.log('IUGB Library - Application initialized successfully');

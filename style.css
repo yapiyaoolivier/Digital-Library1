@@ -3773,6 +3773,29 @@ a:hover {
     transform: none !important;
 }
 
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(26px) scale(0.98);
+    transition:
+        opacity 0.65s ease,
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0s);
+    will-change: opacity, transform;
+}
+
+.scroll-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
 /* Messages de succès/erreur */
 .message {
     padding: 15px;
