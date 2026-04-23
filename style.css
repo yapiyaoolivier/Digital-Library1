@@ -862,6 +862,10 @@ a:hover {
     opacity: 0.92;
 }
 
+.search-page .resource-hero p {
+    color: var(--text-dark);
+}
+
 .resource-tools,
 .resource-section {
     margin: 20px;
@@ -940,6 +944,20 @@ a:hover {
     color: var(--text-dark);
 }
 
+.resource-badge.premium {
+    background: rgba(245, 158, 11, 0.15);
+    color: #b45309;
+}
+
+.resource-badge.free {
+    background: rgba(16, 185, 129, 0.12);
+    color: #047857;
+}
+
+.resource-badge i {
+    margin-right: 6px;
+}
+
 .resource-card h3 {
     margin-bottom: 8px;
     font-size: 1.05rem;
@@ -949,6 +967,11 @@ a:hover {
     color: var(--text-light);
     margin-bottom: 16px;
     font-size: 0.9rem;
+}
+
+.resource-card.is-locked {
+    opacity: 0.92;
+    border-color: rgba(245, 158, 11, 0.35);
 }
 
 .search-page .books-container,

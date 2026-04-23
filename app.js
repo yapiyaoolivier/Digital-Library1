@@ -112,15 +112,15 @@ const courseMetadata = {
 };
 
 const pastPapersData = [
-    { id: 1, title: 'Calculus Midterm 2024', course: 'Mathematics', program: 'BSS', year: '2024', semester: 'Semester 1', type: 'Midterm' },
-    { id: 2, title: 'Linear Algebra Final 2023', course: 'Mathematics', program: 'BSS', year: '2023', semester: 'Semester 2', type: 'Final' },
-    { id: 3, title: 'Study Methods Exam 2024', course: 'Methods and Techniques', program: 'BSS', year: '2024', semester: 'Semester 1', type: 'Exam' },
-    { id: 4, title: 'Python Programming Test 2023', course: 'Computer Science', program: 'BSS', year: '2023', semester: 'Semester 2', type: 'Test' },
-    { id: 5, title: 'Statistics Final 2024', course: 'Statistics', program: 'BSS', year: '2024', semester: 'Semester 2', type: 'Final' },
-    { id: 6, title: 'Finance Exam 2024', course: 'Finance', program: 'BBA', year: '2024', semester: 'Semester 1', type: 'Exam' },
-    { id: 7, title: 'Marketing Case Study 2023', course: 'Marketing', program: 'BBA', year: '2023', semester: 'Semester 2', type: 'Case Study' },
-    { id: 8, title: 'Project Management Final 2024', course: 'Management', program: 'BBA', year: '2024', semester: 'Semester 2', type: 'Final' },
-    { id: 9, title: 'Accounting Audit Paper 2023', course: 'Accounting', program: 'BBA', year: '2023', semester: 'Semester 1', type: 'Exam' }
+    { id: 1, title: 'Calculus Midterm 2024', course: 'Mathematics', program: 'BSS', year: '2024', semester: 'Semester 1', type: 'Midterm', isPremium: false },
+    { id: 2, title: 'Linear Algebra Final 2023', course: 'Mathematics', program: 'BSS', year: '2023', semester: 'Semester 2', type: 'Final', isPremium: true },
+    { id: 3, title: 'Study Methods Exam 2024', course: 'Methods and Techniques', program: 'BSS', year: '2024', semester: 'Semester 1', type: 'Exam', isPremium: true },
+    { id: 4, title: 'Python Programming Test 2023', course: 'Computer Science', program: 'BSS', year: '2023', semester: 'Semester 2', type: 'Test', isPremium: true },
+    { id: 5, title: 'Statistics Final 2024', course: 'Statistics', program: 'BSS', year: '2024', semester: 'Semester 2', type: 'Final', isPremium: true },
+    { id: 6, title: 'Finance Exam 2024', course: 'Finance', program: 'BBA', year: '2024', semester: 'Semester 1', type: 'Exam', isPremium: false },
+    { id: 7, title: 'Marketing Case Study 2023', course: 'Marketing', program: 'BBA', year: '2023', semester: 'Semester 2', type: 'Case Study', isPremium: true },
+    { id: 8, title: 'Project Management Final 2024', course: 'Management', program: 'BBA', year: '2024', semester: 'Semester 2', type: 'Final', isPremium: true },
+    { id: 9, title: 'Accounting Audit Paper 2023', course: 'Accounting', program: 'BBA', year: '2023', semester: 'Semester 1', type: 'Exam', isPremium: true }
 ];
 
 let currentBookFilter = 'all';
@@ -351,7 +351,7 @@ function initHomePage() {
 
     const booksCountEl = document.getElementById('booksCount');
     if (booksCountEl) {
-        booksCountEl.textContent = `${getAllBooks().length}`;
+        booksCountEl.textContent = '1000+';
     }
 }
 
@@ -644,7 +644,8 @@ function initPastPapersPage() {
         });
 
         if (countEl) {
-            countEl.textContent = `${results.length} paper${results.length === 1 ? '' : 's'} available`;
+            const premiumCount = results.filter(paper => paper.isPremium).length;
+            countEl.textContent = `1000+ papers available • ${premiumCount} premium in this view`;
         }
 
         listEl.innerHTML = '';
@@ -661,16 +662,18 @@ function initPastPapersPage() {
         }
 
         results.forEach(paper => {
+            const isLocked = paper.isPremium && !isUserPremium();
             const card = document.createElement('div');
-            card.className = 'resource-card';
+            card.className = `resource-card${isLocked ? ' is-locked' : ''}`;
             card.innerHTML = `
                 <div class="resource-card-head">
                     <span class="resource-badge">${paper.program}</span>
                     <span class="resource-badge muted">${paper.year}</span>
+                    ${paper.isPremium ? '<span class="resource-badge premium"><i class="fas fa-lock"></i> Premium</span>' : '<span class="resource-badge free"><i class="fas fa-unlock"></i> Free</span>'}
                 </div>
                 <h3>${paper.title}</h3>
                 <p>${paper.course} • ${paper.semester} • ${paper.type}</p>
-                <button class="btn-primary" onclick="openPastPaper(${paper.id})">
+                <button class="btn-primary" onclick="openPastPaper(${paper.id})" ${isLocked ? 'disabled' : ''}>
                     <i class="fas fa-folder-open"></i> Open Paper
                 </button>
             `;
@@ -688,6 +691,11 @@ function initPastPapersPage() {
 function openPastPaper(paperId) {
     const paper = pastPapersData.find(item => item.id === paperId);
     if (!paper) return;
+
+    if (paper.isPremium && !isUserPremium()) {
+        alert('This past paper is available to premium members only. Please upgrade to access it.');
+        return;
+    }
 
     showLoading();
     setTimeout(() => {
