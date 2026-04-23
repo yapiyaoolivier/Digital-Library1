@@ -3674,6 +3674,62 @@ a:hover {
     }
 }
 
+@media (hover: none) and (pointer: coarse) {
+    .program-card:active {
+        transform: translateY(-15px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        border-color: var(--primary-color);
+    }
+
+    .program-card:active::before {
+        height: 100%;
+        opacity: 0.05;
+    }
+
+    .program-card:active .arrow {
+        transform: translateX(8px);
+    }
+
+    .stat-card:active {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .featured-card:active {
+        transform: translateY(-10px);
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(236, 72, 153, 0.15));
+        border-color: var(--primary-color);
+        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
+    }
+
+    .course-card:active {
+        transform: translateY(-20px) rotateZ(2deg);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        border-color: var(--primary-color);
+    }
+
+    .course-card:active .course-icon {
+        transform: scale(1.1) rotateZ(-10deg);
+    }
+
+    .book-item:active {
+        transform: translateY(-15px) rotateZ(-2deg);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        border-color: var(--primary-color);
+    }
+
+    .book-item:active .book-cover::after {
+        transform: translateX(100%);
+    }
+
+    .btn-read:active,
+    .btn-download:active,
+    .btn-primary:active,
+    .btn-subscribe:active {
+        transform: scale(0.98);
+    }
+}
+
 /* Animations supplémentaires */
 @keyframes slideInRight {
     from {

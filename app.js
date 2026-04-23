@@ -697,7 +697,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     setTimeout(() => {
-        document.querySelectorAll('.program-card, .course-card').forEach((card, index) => {
+        document.querySelectorAll('.program-card, .course-card, .featured-card, .stat-card, .book-item, .resource-card').forEach((card, index) => {
             card.style.animationDelay = `${index * 0.1}s`;
             card.style.animation = 'fadeIn 0.5s ease forwards';
         });
