@@ -867,6 +867,11 @@ a:hover {
     margin: 20px;
 }
 
+.resource-tools {
+    display: grid;
+    gap: 16px;
+}
+
 .resource-select {
     background: white;
     border: 1px solid var(--border-color);
@@ -944,6 +949,12 @@ a:hover {
     color: var(--text-light);
     margin-bottom: 16px;
     font-size: 0.9rem;
+}
+
+.search-page .books-container,
+.past-papers-page .resource-section,
+.past-papers-page .resource-tools {
+    width: auto;
 }
 
 .book-meta {
@@ -3557,14 +3568,10 @@ a:hover {
         grid-template-columns: 1fr;
     }
 
-    .resource-tools {
-        display: grid;
-        gap: 14px;
-    }
-
     .book-search {
         padding: 10px 14px;
         gap: 10px;
+        min-width: 0;
     }
 
     .book-search input,
@@ -3599,6 +3606,61 @@ a:hover {
 
     .header-top {
         gap: 10px;
+    }
+
+    .search-page .header-top,
+    .past-papers-page .header-top {
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr) 44px;
+        align-items: center;
+    }
+
+    .search-page .header-top h1,
+    .past-papers-page .header-top h1 {
+        min-width: 0;
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+
+    .search-page .resource-hero,
+    .past-papers-page .resource-hero,
+    .search-page .books-container,
+    .past-papers-page .resource-tools,
+    .past-papers-page .resource-section {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .search-page .books-container {
+        padding: 18px 14px 24px;
+    }
+
+    .search-page .books-grid,
+    .past-papers-page .resource-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .past-papers-page .resource-tools {
+        gap: 12px;
+    }
+
+    .search-page .book-search,
+    .past-papers-page .book-search,
+    .past-papers-page .resource-select {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .search-page .resource-count,
+    .past-papers-page .resource-count {
+        font-size: 0.85rem;
+        margin-bottom: 12px;
+    }
+
+    .past-papers-page .resource-card,
+    .search-page .book-item {
+        border-radius: 16px;
     }
     
     .amount {
