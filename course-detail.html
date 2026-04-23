@@ -41,7 +41,7 @@
             <h2 id="courseFullTitle">Course Title</h2>
             <div class="course-stats">
                 <span><i class="fas fa-book"></i> <span id="bookCount">10</span> Books</span>
-                <span><i class="fas fa-star"></i> 4.8/5</span>
+                <span><i class="fas fa-star"></i> <span id="courseRating">4.8/5</span></span>
                 <span><i class="fas fa-users"></i> <span id="enrolledCount">250</span> Students</span>
             </div>
             <p class="course-description" id="courseDescription">Comprehensive learning materials for your academic success.</p>
@@ -51,10 +51,19 @@
     <!-- Books List -->
     <section class="books-container">
         <h3>Learning Resources</h3>
+        <div class="book-search">
+            <i class="fas fa-search"></i>
+            <input
+                type="search"
+                id="bookSearch"
+                placeholder="Search books by title, author, or keyword"
+                aria-label="Search books"
+            >
+        </div>
         <div class="books-filter">
-            <button class="filter-btn active" onclick="filterBooks('all')">All</button>
-            <button class="filter-btn" onclick="filterBooks('free')">Free</button>
-            <button class="filter-btn" onclick="filterBooks('premium')">Premium</button>
+            <button class="filter-btn active" onclick="filterBooks('all', this)">All</button>
+            <button class="filter-btn" onclick="filterBooks('free', this)">Free</button>
+            <button class="filter-btn" onclick="filterBooks('premium', this)">Premium</button>
         </div>
         <div id="booksList" class="books-grid">
             <!-- Books will be dynamically inserted here -->

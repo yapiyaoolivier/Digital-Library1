@@ -1,98 +1,92 @@
-# IUGB Library - Application Mobile pour Étudiants
+# IUGB Library - Mobile App for Students
 
-Une application web mobile-first moderne conçue pour les étudiants de l'Université Internationale de Grand-Bassam (IUGB). L'application offre un accès aux ressources éducatives avec un système d'authentification sécurisé et un modèle d'abonnement premium.
+A modern mobile-first web application designed for students at the International University of Grand-Bassam (IUGB). The app provides access to academic resources with secure authentication and a premium subscription model.
 
-## 🎯 Fonctionnalités
+## Features
 
-### 🔐 Authentification
-- Connexion et inscription avec validation d'email IUGB (`@iugb.edu.ci`)
-- Validation de mot de passe (minimum 8 caractères)
-- Persistance de session avec localStorage
+### Authentication
+- Sign in and sign up with IUGB email validation (`@iugb.edu.ci`)
+- Password validation with a minimum length requirement
+- Session persistence using `localStorage`
 
-### 📚 Navigation par Programme
-- **BSS (Bachelor of Science)** : Mathématiques, MET, Informatique, Statistiques
-- **BBA (Bachelor of Business Administration)** : Finance, Marketing, Management, Comptabilité
+### Program Navigation
+- **BSS (Bachelor of Science)**: Mathematics, Methods and Techniques, Computer Science, Statistics
+- **BBA (Bachelor of Business Administration)**: Finance, Marketing, Management, Accounting
 
-### 📖 Bibliothèque de Livres
-- Livres organisés par cours
-- Indicateurs visuels pour les ressources premium
-- Fonctionnalités de lecture et téléchargement
-- Accès restreint pour les livres premium
+### Book Library
+- Books organized by course
+- Visual indicators for premium resources
+- Read and download actions
+- Built-in book search by title, author, or keyword
+- Restricted access to premium books
 
-### 💎 Abonnement Premium
-- Prix : 1000 FCFA par mois
-- Accès à tous les livres premium
-- Interface de souscription intuitive
-- Annulation à tout moment
+### Premium Subscription
+- Access to all premium books
+- Intuitive upgrade flow
+- Cancel anytime
 
-## 🎨 Design
+## Design
 
-### Principes de Design
-- **Mobile-first** : Interface optimisée pour les appareils mobiles
-- **Palette de couleurs IUGB** : Bleu (#0056b3) et jaune (#ffc107)
-- **Typographie distinctive** : Montserrat pour les titres, Poppins pour le corps
-- **Animations fluides** : Transitions et micro-interactions
-- **Signature Deerflow** : Élément subtil et cliquable en bas à droite
+### Design Principles
+- **Mobile-first**: Optimized for phones and smaller screens
+- **IUGB-inspired palette**: Blue (`#0056b3`) and yellow (`#ffc107`)
+- **Distinct typography**: Montserrat for headings and Poppins for body text
+- **Smooth animations**: Transitions and micro-interactions across the interface
 
-### Éléments Visuels
-- Cartes interactives avec effets de survol
-- Indicateurs visuels pour l'état premium
-- Icônes Font Awesome pour une meilleure lisibilité
-- Images d'illustration pertinentes
+### Visual Elements
+- Interactive cards with hover effects
+- Premium state indicators
+- Font Awesome icons for clarity
+- Relevant illustration imagery
 
-## 🛠️ Structure Technique
+## Technical Structure
 
-### Fichiers Principaux
+### Main Files
+```text
+├── index.html
+├── style.css
+├── app.js
+└── README.md
 ```
-├── index.html          # Structure HTML complète
-├── style.css           # Styles CSS modernes
-├── app.js              # Logique JavaScript
-└── README.md           # Documentation
-```
 
-### Architecture JavaScript
-- **appData** : Gestion des données de l'application
-- **utils** : Fonctions utilitaires (validation, navigation)
-- **auth** : Gestion de l'authentification
-- **booksManager** : Gestion des livres et cours
-- **premiumManager** : Gestion des abonnements
-- **eventManager** : Gestion des événements
+### Application Areas
+- **Authentication**: Sign-in and sign-up validation
+- **Navigation**: Program and course browsing
+- **Books**: Course resources, filtering, and search
+- **Premium**: Upgrade experience and premium access handling
 
-## 🚀 Installation et Utilisation
+## Local Usage
 
-### Exécution Locale
-1. Téléchargez les fichiers dans un dossier
-2. Ouvrez `index.html` dans un navigateur web moderne
-3. L'application fonctionne entièrement côté client
+1. Download the project files into a folder.
+2. Open `index.html` in a modern web browser.
+3. The application runs entirely on the client side.
 
-### Authentification de Test
-- Email : `etudiant@iugb.edu.ci` (format requis)
-- Mot de passe : 8 caractères minimum
+### Test Authentication
+- Email: `student@iugb.edu.ci`
+- Password: minimum 6 characters
 
-## 📱 Compatibilité
+## Compatibility
 
-- **Navigateurs** : Chrome, Firefox, Safari, Edge (versions récentes)
-- **Appareils** : Mobile, Tablet, Desktop
-- **Connectivité** : Fonctionne hors ligne après chargement initial
+- **Browsers**: Recent versions of Chrome, Firefox, Safari, and Edge
+- **Devices**: Mobile, tablet, and desktop
+- **Connectivity**: Works offline after the initial load
 
-## 🔒 Sécurité
+## Security
 
-- Validation côté client des emails IUGB
-- Stockage sécurisé des sessions dans localStorage
-- Protection contre l'accès non autorisé aux ressources premium
+- Client-side validation for IUGB email addresses
+- Session storage via `localStorage`
+- Protection against unauthorized access to premium resources
 
-## 🎯 Points Forts
+## Strengths
 
-1. **Expérience Utilisateur** : Interface intuitive et responsive
-2. **Performance** : Chargement rapide, animations optimisées
-3. **Accessibilité** : Contraste élevé, navigation au clavier
-4. **Maintenabilité** : Code structuré et commenté
-5. **Extensibilité** : Architecture modulaire facile à étendre
+1. User-friendly responsive interface
+2. Fast loading and lightweight interactions
+3. Accessible visual contrast and keyboard-friendly flows
+4. Maintainable structure for future updates
+5. Easy extensibility for new programs, courses, and books
 
-## 📄 Licence
+## License
 
-Cette application est un projet éducatif développé pour l'Université Internationale de Grand-Bassam.
+This application is an educational project developed for the International University of Grand-Bassam.
 
----
-
-**Développé avec ❤️ par Deerflow** - [deerflow.tech](https://deerflow.tech)
+Developed by [Deerflow](https://deerflow.tech)

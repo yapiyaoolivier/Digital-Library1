@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IUGB Library - Past Papers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="past-papers-page">
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner">
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+            </div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <header class="app-header">
+        <div class="header-top">
+            <button class="btn-back" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1>Past Papers</h1>
+            <a href="premium.html" class="btn-premium-header">
+                <i class="fas fa-gem"></i>
+            </a>
+        </div>
+    </header>
+
+    <section class="resource-hero">
+        <h2>Review older exam subjects</h2>
+        <p>Search and filter previous tests, finals, and revision papers by program or keyword.</p>
+    </section>
+
+    <section class="resource-tools">
+        <div class="book-search">
+            <i class="fas fa-search"></i>
+            <input type="search" id="pastPaperSearch" placeholder="Search past papers">
+        </div>
+        <div class="resource-select">
+            <label for="pastPaperProgram">Program</label>
+            <select id="pastPaperProgram">
+                <option value="all">All programs</option>
+                <option value="BSS">BSS</option>
+                <option value="BBA">BBA</option>
+            </select>
+        </div>
+    </section>
+
+    <section class="resource-section">
+        <p class="resource-count" id="pastPaperCount">0 papers available</p>
+        <div id="pastPapersList" class="resource-grid"></div>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>

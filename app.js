@@ -1,99 +1,132 @@
 // ============================================
-// IUGB LIBRARY - APPLICATION JavaScript
+// IUGB LIBRARY - JavaScript Application
 // ============================================
 
 // ============================================
-// DONNÉES DES COURS
+// COURSE DATA
 // ============================================
 
 const coursesData = {
     mathematics: {
-        title: 'Mathématiques',
+        title: 'Mathematics',
         icon: 'fas fa-calculator',
+        description: 'Core mathematics resources for problem-solving, theory, and practice.',
         books: [
-            { id: 1, title: 'Algèbre Linéaire', author: 'David C. Lay', description: 'Concepts fondamentaux', isPremium: false },
-            { id: 2, title: 'Calcul Intégral', author: 'James Stewart', description: 'Méthodes avancées', isPremium: true },
-            { id: 3, title: 'Géométrie Analytique', author: 'L. Loomis', description: 'Théorie et applications', isPremium: false },
-            { id: 4, title: 'Statistiques Mathématiques', author: 'Sheldon Ross', description: 'Probabilités', isPremium: true },
-            { id: 5, title: 'Équations Différentielles', author: 'Dennis Zill', description: 'Solutions détaillées', isPremium: false },
-            { id: 6, title: 'Analyse Complexe', author: 'Lars Ahlfors', description: 'Fonctions analytiques', isPremium: true }
+            { id: 1, title: 'Linear Algebra', author: 'David C. Lay', description: 'Fundamental concepts', isPremium: false },
+            { id: 2, title: 'Integral Calculus', author: 'James Stewart', description: 'Advanced methods', isPremium: true },
+            { id: 3, title: 'Analytical Geometry', author: 'L. Loomis', description: 'Theory and applications', isPremium: false },
+            { id: 4, title: 'Mathematical Statistics', author: 'Sheldon Ross', description: 'Probability concepts', isPremium: true },
+            { id: 5, title: 'Differential Equations', author: 'Dennis Zill', description: 'Step-by-step solutions', isPremium: false },
+            { id: 6, title: 'Complex Analysis', author: 'Lars Ahlfors', description: 'Analytic functions', isPremium: true }
         ]
     },
     met: {
-        title: "MET - Méthodes d'Études et Techniques",
+        title: 'Methods and Techniques',
         icon: 'fas fa-book-reader',
+        description: 'Study strategies and academic methods to improve learning outcomes.',
         books: [
-            { id: 7, title: 'Techniques de Prise de Notes', author: 'Tony Buzan', description: 'Mind mapping efficace', isPremium: false },
-            { id: 8, title: 'Gestion du Temps', author: 'David Allen', description: 'Getting Things Done', isPremium: false },
-            { id: 9, title: 'Mémoire et Apprentissage', author: 'Hermann Ebbinghaus', description: 'Sciences du cerveau', isPremium: true },
-            { id: 10, title: 'Techniques de Présentation', author: 'Nancy Duarte', description: 'Slideologie', isPremium: false }
+            { id: 7, title: 'Note-Taking Techniques', author: 'Tony Buzan', description: 'Effective mind mapping', isPremium: false },
+            { id: 8, title: 'Time Management', author: 'David Allen', description: 'Getting Things Done', isPremium: false },
+            { id: 9, title: 'Memory and Learning', author: 'Hermann Ebbinghaus', description: 'Brain science insights', isPremium: true },
+            { id: 10, title: 'Presentation Techniques', author: 'Nancy Duarte', description: 'Slide design and delivery', isPremium: false }
         ]
     },
     cs: {
-        title: 'Informatique - Computer Science',
+        title: 'Computer Science',
         icon: 'fas fa-laptop-code',
+        description: 'Programming, systems, and software resources for technical growth.',
         books: [
-            { id: 11, title: 'Introduction à Python', author: 'Mark Lutz', description: 'Programmation de base', isPremium: false },
-            { id: 12, title: 'Structures de Données', author: 'Cormen et al.', description: 'Algorithmes avancés', isPremium: true },
-            { id: 13, title: 'Développement Web', author: 'Jon Duckett', description: 'HTML5 & CSS3', isPremium: false },
-            { id: 14, title: 'Base de Données', author: 'C.J. Date', description: 'SQL et normalization', isPremium: true },
-            { id: 15, title: 'Programmation JavaScript', author: 'Kyle Simpson', description: "You Don't Know JS", isPremium: false }
+            { id: 11, title: 'Introduction to Python', author: 'Mark Lutz', description: 'Programming basics', isPremium: false },
+            { id: 12, title: 'Data Structures', author: 'Cormen et al.', description: 'Advanced algorithms', isPremium: true },
+            { id: 13, title: 'Web Development', author: 'Jon Duckett', description: 'HTML5 and CSS3', isPremium: false },
+            { id: 14, title: 'Databases', author: 'C.J. Date', description: 'SQL and normalization', isPremium: true },
+            { id: 15, title: 'JavaScript Programming', author: 'Kyle Simpson', description: "You Don't Know JS", isPremium: false }
         ]
     },
     statistics: {
-        title: 'Statistiques',
+        title: 'Statistics',
         icon: 'fas fa-chart-bar',
+        description: 'Statistical thinking, inference, and applied data analysis materials.',
         books: [
-            { id: 16, title: 'Statistiques Descriptives', author: 'David Freedman', description: 'Données et graphiques', isPremium: false },
-            { id: 17, title: 'Inférence Statistique', author: 'George Casella', description: "Tests d'hypothèse", isPremium: true },
-            { id: 18, title: 'Analyse de Régression', author: 'W. Greene', description: 'Modèles linéaires', isPremium: false },
-            { id: 19, title: 'Probabilités Appliquées', author: 'Sheldon Ross', description: 'Théorie et pratique', isPremium: true }
+            { id: 16, title: 'Descriptive Statistics', author: 'David Freedman', description: 'Data and charts', isPremium: false },
+            { id: 17, title: 'Statistical Inference', author: 'George Casella', description: 'Hypothesis testing', isPremium: true },
+            { id: 18, title: 'Regression Analysis', author: 'W. Greene', description: 'Linear models', isPremium: false },
+            { id: 19, title: 'Applied Probability', author: 'Sheldon Ross', description: 'Theory and practice', isPremium: true }
         ]
     },
     finance: {
         title: 'Finance',
         icon: 'fas fa-coins',
+        description: 'Financial analysis, investment, and portfolio management resources.',
         books: [
-            { id: 20, title: 'Analyse Financière', author: 'Benjamin Graham', description: 'Principes fondamentaux', isPremium: false },
-            { id: 21, title: 'Investissement en Bourse', author: 'Peter Lynch', description: 'Stratégies gagnantes', isPremium: true },
-            { id: 22, title: 'Gestion de Portefeuille', author: 'Harry Markowitz', description: 'Théorie moderne', isPremium: false },
-            { id: 23, title: 'Dérivés Financiers', author: 'John Hull', description: 'Options et futures', isPremium: true }
+            { id: 20, title: 'Financial Analysis', author: 'Benjamin Graham', description: 'Core principles', isPremium: false },
+            { id: 21, title: 'Stock Market Investing', author: 'Peter Lynch', description: 'Winning strategies', isPremium: true },
+            { id: 22, title: 'Portfolio Management', author: 'Harry Markowitz', description: 'Modern theory', isPremium: false },
+            { id: 23, title: 'Financial Derivatives', author: 'John Hull', description: 'Options and futures', isPremium: true }
         ]
     },
     marketing: {
         title: 'Marketing',
         icon: 'fas fa-bullhorn',
+        description: 'Branding, digital outreach, and consumer behavior learning resources.',
         books: [
-            { id: 24, title: 'Stratégie Marketing', author: 'Philip Kotler', description: 'Fondamentaux', isPremium: false },
-            { id: 25, title: 'Marketing Digital', author: 'Chaffey & Ellis-Chadwick', description: 'Web et réseaux sociaux', isPremium: true },
-            { id: 26, title: 'Comportement du Consommateur', author: 'Solomon et al.', description: 'Psychologie marketing', isPremium: false },
-            { id: 27, title: 'Brand Management', author: 'Kevin Keller', description: 'Gestion de marque', isPremium: true }
+            { id: 24, title: 'Marketing Strategy', author: 'Philip Kotler', description: 'Fundamentals', isPremium: false },
+            { id: 25, title: 'Digital Marketing', author: 'Chaffey & Ellis-Chadwick', description: 'Web and social media', isPremium: true },
+            { id: 26, title: 'Consumer Behavior', author: 'Solomon et al.', description: 'Marketing psychology', isPremium: false },
+            { id: 27, title: 'Brand Management', author: 'Kevin Keller', description: 'Brand leadership', isPremium: true }
         ]
     },
     management: {
         title: 'Management',
         icon: 'fas fa-project-diagram',
+        description: 'Leadership, teams, and organizational development resources.',
         books: [
-            { id: 28, title: 'Leadership Efficace', author: 'John Maxwell', description: 'Principes de direction', isPremium: false },
-            { id: 29, title: 'Gestion de Projet', author: 'PMBOK', description: 'Méthodologie PMI', isPremium: true },
-            { id: 30, title: 'Développement Organisationnel', author: 'Wendell French', description: 'Changement', isPremium: false },
-            { id: 31, title: 'Gestion des Ressources Humaines', author: 'Gary Dessler', description: 'GRH moderne', isPremium: true }
+            { id: 28, title: 'Effective Leadership', author: 'John Maxwell', description: 'Leadership principles', isPremium: false },
+            { id: 29, title: 'Project Management', author: 'PMBOK', description: 'PMI methodology', isPremium: true },
+            { id: 30, title: 'Organizational Development', author: 'Wendell French', description: 'Change management', isPremium: false },
+            { id: 31, title: 'Human Resource Management', author: 'Gary Dessler', description: 'Modern HR practices', isPremium: true }
         ]
     },
     accounting: {
-        title: 'Comptabilité',
+        title: 'Accounting',
         icon: 'fas fa-calculator',
+        description: 'Accounting, auditing, and taxation references for business studies.',
         books: [
-            { id: 32, title: 'Principes Comptables', author: 'Weygandt et al.', description: 'IFRS standards', isPremium: false },
-            { id: 33, title: 'Audit Comptable', author: 'Arens & Loebbecke', description: 'Vérification', isPremium: true },
-            { id: 34, title: 'Comptabilité Analytique', author: 'Dornier & Favier', description: 'Coûts et contrôle', isPremium: false },
-            { id: 35, title: 'Fiscalité Entreprise', author: 'Goujet', description: 'Impôts et taxes', isPremium: true }
+            { id: 32, title: 'Accounting Principles', author: 'Weygandt et al.', description: 'IFRS standards', isPremium: false },
+            { id: 33, title: 'Auditing', author: 'Arens & Loebbecke', description: 'Verification methods', isPremium: true },
+            { id: 34, title: 'Cost Accounting', author: 'Dornier & Favier', description: 'Costs and control', isPremium: false },
+            { id: 35, title: 'Corporate Taxation', author: 'Goujet', description: 'Taxes and compliance', isPremium: true }
         ]
     }
 };
 
+const courseMetadata = {
+    mathematics: { enrolledCount: 240, rating: '4.8/5' },
+    met: { enrolledCount: 175, rating: '4.7/5' },
+    cs: { enrolledCount: 310, rating: '4.9/5' },
+    statistics: { enrolledCount: 210, rating: '4.8/5' },
+    finance: { enrolledCount: 285, rating: '4.8/5' },
+    marketing: { enrolledCount: 230, rating: '4.7/5' },
+    management: { enrolledCount: 260, rating: '4.8/5' },
+    accounting: { enrolledCount: 220, rating: '4.7/5' }
+};
+
+const pastPapersData = [
+    { id: 1, title: 'Calculus Midterm 2024', course: 'Mathematics', program: 'BSS', year: '2024', semester: 'Semester 1', type: 'Midterm' },
+    { id: 2, title: 'Linear Algebra Final 2023', course: 'Mathematics', program: 'BSS', year: '2023', semester: 'Semester 2', type: 'Final' },
+    { id: 3, title: 'Study Methods Exam 2024', course: 'Methods and Techniques', program: 'BSS', year: '2024', semester: 'Semester 1', type: 'Exam' },
+    { id: 4, title: 'Python Programming Test 2023', course: 'Computer Science', program: 'BSS', year: '2023', semester: 'Semester 2', type: 'Test' },
+    { id: 5, title: 'Statistics Final 2024', course: 'Statistics', program: 'BSS', year: '2024', semester: 'Semester 2', type: 'Final' },
+    { id: 6, title: 'Finance Exam 2024', course: 'Finance', program: 'BBA', year: '2024', semester: 'Semester 1', type: 'Exam' },
+    { id: 7, title: 'Marketing Case Study 2023', course: 'Marketing', program: 'BBA', year: '2023', semester: 'Semester 2', type: 'Case Study' },
+    { id: 8, title: 'Project Management Final 2024', course: 'Management', program: 'BBA', year: '2024', semester: 'Semester 2', type: 'Final' },
+    { id: 9, title: 'Accounting Audit Paper 2023', course: 'Accounting', program: 'BBA', year: '2023', semester: 'Semester 1', type: 'Exam' }
+];
+
+let currentBookFilter = 'all';
+
 // ============================================
-// UTILITAIRES
+// UTILITIES
 // ============================================
 
 function showLoading() {
@@ -126,6 +159,20 @@ function setProgramType(type) {
     localStorage.setItem('currentCourseType', type);
 }
 
+function isUserPremium() {
+    return localStorage.getItem('userPremium') === 'true';
+}
+
+function getAllBooks() {
+    return Object.entries(coursesData).flatMap(([courseId, course]) =>
+        course.books.map(book => ({
+            ...book,
+            courseId,
+            courseTitle: course.title
+        }))
+    );
+}
+
 // ============================================
 // VALIDATION
 // ============================================
@@ -135,7 +182,9 @@ function validateEmail(email) {
 }
 
 function clearErrors() {
-    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+    document.querySelectorAll('.error-message').forEach(el => {
+        el.textContent = '';
+    });
 }
 
 function showError(elementId, message) {
@@ -144,14 +193,13 @@ function showError(elementId, message) {
 }
 
 // ============================================
-// AUTHENTIFICATION
+// AUTHENTICATION
 // ============================================
 
 function initAuthPage() {
     const loginForm = document.getElementById('loginForm');
     const signupForm = document.getElementById('signupForm');
 
-    // --- Formulaire de connexion (index.html) ---
     if (loginForm) {
         loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -162,18 +210,18 @@ function initAuthPage() {
             let isValid = true;
 
             if (!email) {
-                showError('loginEmailError', 'Email requis');
+                showError('loginEmailError', 'Email is required');
                 isValid = false;
             } else if (!validateEmail(email)) {
-                showError('loginEmailError', 'Utilisez un email @iugb');
+                showError('loginEmailError', 'Use an @iugb email address');
                 isValid = false;
             }
 
             if (!password) {
-                showError('loginPasswordError', 'Mot de passe requis');
+                showError('loginPasswordError', 'Password is required');
                 isValid = false;
             } else if (password.length < 6) {
-                showError('loginPasswordError', 'Minimum 6 caractères');
+                showError('loginPasswordError', 'Minimum 6 characters');
                 isValid = false;
             }
 
@@ -189,7 +237,6 @@ function initAuthPage() {
         });
     }
 
-    // --- Formulaire d'inscription (index.html et signup.html) ---
     if (signupForm) {
         signupForm.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -198,32 +245,32 @@ function initAuthPage() {
             const name = document.getElementById('signupName').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
             const password = document.getElementById('signupPassword').value;
-            const confirm = document.getElementById('signupConfirm').value;
+            const confirmPassword = document.getElementById('signupConfirm').value;
             let isValid = true;
 
             if (!name) {
-                showError('signupNameError', 'Nom requis');
+                showError('signupNameError', 'Name is required');
                 isValid = false;
             }
 
             if (!email) {
-                showError('signupEmailError', 'Email requis');
+                showError('signupEmailError', 'Email is required');
                 isValid = false;
             } else if (!validateEmail(email)) {
-                showError('signupEmailError', 'Utilisez un email @iugb');
+                showError('signupEmailError', 'Use an @iugb email address');
                 isValid = false;
             }
 
             if (!password) {
-                showError('signupPasswordError', 'Mot de passe requis');
+                showError('signupPasswordError', 'Password is required');
                 isValid = false;
             } else if (password.length < 6) {
-                showError('signupPasswordError', 'Minimum 6 caractères');
+                showError('signupPasswordError', 'Minimum 6 characters');
                 isValid = false;
             }
 
-            if (password !== confirm) {
-                showError('signupConfirmError', 'Les mots de passe ne correspondent pas');
+            if (password !== confirmPassword) {
+                showError('signupConfirmError', 'Passwords do not match');
                 isValid = false;
             }
 
@@ -240,7 +287,6 @@ function initAuthPage() {
     }
 }
 
-// Basculer entre login et signup sur index.html
 function switchForm(event) {
     event.preventDefault();
     const loginForm = document.getElementById('loginForm');
@@ -250,11 +296,10 @@ function switchForm(event) {
 }
 
 // ============================================
-// PAGE HOME
+// HOME PAGE
 // ============================================
 
 function initHomePage() {
-    // Rediriger vers login si pas connecté
     const userData = localStorage.getItem('iugbUser');
     if (!userData) {
         window.location.href = 'index.html';
@@ -266,10 +311,15 @@ function initHomePage() {
     if (userNameEl) {
         userNameEl.textContent = user.name || user.email.split('@')[0];
     }
+
+    const booksCountEl = document.getElementById('booksCount');
+    if (booksCountEl) {
+        booksCountEl.textContent = `${getAllBooks().length}`;
+    }
 }
 
 function logout() {
-    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+    if (confirm('Are you sure you want to log out?')) {
         localStorage.removeItem('iugbUser');
         localStorage.removeItem('userPremium');
         window.location.href = 'index.html';
@@ -277,7 +327,7 @@ function logout() {
 }
 
 // ============================================
-// PAGE COURS (BBA / BSS)
+// COURSE PAGES
 // ============================================
 
 function goToCourseDetail(courseId, courseName) {
@@ -286,47 +336,100 @@ function goToCourseDetail(courseId, courseName) {
     window.location.href = 'course-detail.html';
 }
 
-// ============================================
-// PAGE DÉTAIL DU COURS
-// ============================================
+function renderBooksList(books) {
+    const booksList = document.getElementById('booksList');
+    if (!booksList) return;
+
+    booksList.innerHTML = '';
+
+    if (!books.length) {
+        booksList.innerHTML = `
+            <div class="empty-books-state">
+                <i class="fas fa-search"></i>
+                <h4>No books found</h4>
+                <p>Try another keyword or change the selected filter.</p>
+            </div>
+        `;
+        return;
+    }
+
+    books.forEach(book => {
+        booksList.appendChild(createBookElement(book));
+    });
+}
+
+function getFilteredBooks(courseId) {
+    const courseInfo = coursesData[courseId];
+    if (!courseInfo) return [];
+
+    const searchInput = document.getElementById('bookSearch');
+    const searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : '';
+
+    return courseInfo.books.filter(book => {
+        const matchesFilter =
+            currentBookFilter === 'all' ||
+            (currentBookFilter === 'free' && !book.isPremium) ||
+            (currentBookFilter === 'premium' && book.isPremium);
+
+        const searchableText = `${book.title} ${book.author} ${book.description}`.toLowerCase();
+        const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
+
+        return matchesFilter && matchesSearch;
+    });
+}
+
+function updateCourseBooks() {
+    const courseId = localStorage.getItem('currentCourse');
+    const filteredBooks = getFilteredBooks(courseId);
+    renderBooksList(filteredBooks);
+}
 
 function initCourseDetailPage() {
     const courseId = localStorage.getItem('currentCourse');
     const courseName = localStorage.getItem('currentCourseName');
+    const courseInfo = coursesData[courseId];
+
+    if (!courseInfo) {
+        window.location.href = 'home.html';
+        return;
+    }
 
     const titleEl = document.getElementById('courseTitle');
     const fullTitleEl = document.getElementById('courseFullTitle');
-    if (titleEl) titleEl.textContent = courseName;
-    if (fullTitleEl) fullTitleEl.textContent = courseName;
-
-    const courseInfo = coursesData[courseId];
-    const books = courseInfo ? courseInfo.books : [];
-
-    const booksList = document.getElementById('booksList');
-    if (booksList) {
-        booksList.innerHTML = '';
-        books.forEach(book => {
-            booksList.appendChild(createBookElement(book));
-        });
-    }
-
+    const descriptionEl = document.getElementById('courseDescription');
+    const iconEl = document.getElementById('courseIcon');
+    const enrolledCountEl = document.getElementById('enrolledCount');
+    const ratingEl = document.getElementById('courseRating');
     const bookCountEl = document.getElementById('bookCount');
-    if (bookCountEl) bookCountEl.textContent = books.length;
 
-    const isPremium = localStorage.getItem('userPremium') === 'true';
-    const hasPremiumBooks = books.some(book => book.isPremium);
+    if (titleEl) titleEl.textContent = courseName || courseInfo.title;
+    if (fullTitleEl) fullTitleEl.textContent = courseName || courseInfo.title;
+    if (descriptionEl) descriptionEl.textContent = courseInfo.description;
+    if (iconEl) iconEl.innerHTML = `<i class="${courseInfo.icon}"></i>`;
+    if (enrolledCountEl) enrolledCountEl.textContent = courseMetadata[courseId]?.enrolledCount || 250;
+    if (ratingEl) ratingEl.textContent = courseMetadata[courseId]?.rating || '4.8/5';
+    if (bookCountEl) bookCountEl.textContent = courseInfo.books.length;
+
     const noticeEl = document.getElementById('noPremiumNotice');
-    if (noticeEl && hasPremiumBooks && !isPremium) {
+    const hasPremiumBooks = courseInfo.books.some(book => book.isPremium);
+    if (noticeEl && hasPremiumBooks && !isUserPremium()) {
         noticeEl.style.display = 'block';
     }
+
+    const searchInput = document.getElementById('bookSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', updateCourseBooks);
+    }
+
+    currentBookFilter = 'all';
+    updateCourseBooks();
 }
 
 function createBookElement(book) {
     const div = document.createElement('div');
     div.className = 'book-item';
 
-    const isPremium = localStorage.getItem('userPremium') === 'true';
-    const isLocked = book.isPremium && !isPremium;
+    const isLocked = book.isPremium && !isUserPremium();
 
     div.innerHTML = `
         <div class="book-cover" style="background: linear-gradient(135deg, #6366f1, #ec4899); position: relative;">
@@ -339,10 +442,10 @@ function createBookElement(book) {
             <div class="book-description">${book.description}</div>
             <div class="book-action">
                 <button class="btn-read" onclick="readBook(${book.id})" ${isLocked ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
-                    <i class="fas fa-book-open"></i> Lire
+                    <i class="fas fa-book-open"></i> Read
                 </button>
                 <button class="btn-download" onclick="downloadBook(${book.id})" ${isLocked ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
-                    <i class="fas fa-download"></i> Télécharger
+                    <i class="fas fa-download"></i> Download
                 </button>
             </div>
         </div>
@@ -351,65 +454,207 @@ function createBookElement(book) {
     return div;
 }
 
-function filterBooks(type) {
+function createSearchResultElement(book) {
+    const div = document.createElement('div');
+    div.className = 'book-item';
+
+    const isLocked = book.isPremium && !isUserPremium();
+
+    div.innerHTML = `
+        <div class="book-cover" style="background: linear-gradient(135deg, #0f766e, #0ea5e9); position: relative;">
+            <i class="fas fa-book" style="font-size: 2rem; color: white;"></i>
+            ${isLocked ? '<div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 8px; font-size: 0.8rem;"><i class="fas fa-lock"></i> Premium</div>' : ''}
+        </div>
+        <div class="book-info">
+            <div class="book-title">${book.title}</div>
+            <div class="book-author">${book.author}</div>
+            <div class="book-description">${book.description}</div>
+            <div class="book-meta">${book.courseTitle}</div>
+            <div class="book-action">
+                <button class="btn-read" onclick="openSearchBook('${book.courseId}', ${book.id})" ${isLocked ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
+                    <i class="fas fa-book-open"></i> Read
+                </button>
+                <button class="btn-download" onclick="downloadSearchBook('${book.courseId}', ${book.id})" ${isLocked ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+        </div>
+    `;
+
+    return div;
+}
+
+function filterBooks(type, clickedButton = null) {
+    currentBookFilter = type;
+
     document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    const targetButton = clickedButton || event?.target;
+    if (targetButton) targetButton.classList.add('active');
 
-    const courseId = localStorage.getItem('currentCourse');
-    const courseInfo = coursesData[courseId];
-    if (!courseInfo) return;
-
-    let books = courseInfo.books;
-    if (type === 'free') books = books.filter(b => !b.isPremium);
-    if (type === 'premium') books = books.filter(b => b.isPremium);
-
-    const booksList = document.getElementById('booksList');
-    if (booksList) {
-        booksList.innerHTML = '';
-        books.forEach(book => booksList.appendChild(createBookElement(book)));
-    }
+    updateCourseBooks();
 }
 
 function readBook(bookId) {
-    const isPremium = localStorage.getItem('userPremium') === 'true';
     const courseId = localStorage.getItem('currentCourse');
     const book = coursesData[courseId]?.books.find(b => b.id === bookId);
 
     if (!book) return;
 
-    if (book.isPremium && !isPremium) {
-        alert('Ce livre est exclusif aux membres premium. Veuillez souscrire pour y accéder.');
+    if (book.isPremium && !isUserPremium()) {
+        alert('This book is available to premium members only. Please upgrade to access it.');
         return;
     }
 
     showLoading();
     setTimeout(() => {
         hideLoading();
-        alert(`Ouverture du livre : "${book.title}"\nAuteur : ${book.author}\n\nCette fonctionnalité ouvrirait normalement le livre en PDF.`);
+        alert(`Opening book: "${book.title}"\nAuthor: ${book.author}\n\nThis action would normally open the PDF version of the book.`);
     }, 800);
 }
 
 function downloadBook(bookId) {
-    const isPremium = localStorage.getItem('userPremium') === 'true';
     const courseId = localStorage.getItem('currentCourse');
     const book = coursesData[courseId]?.books.find(b => b.id === bookId);
 
     if (!book) return;
 
-    if (book.isPremium && !isPremium) {
-        alert('Le téléchargement est réservé aux membres premium.');
+    if (book.isPremium && !isUserPremium()) {
+        alert('Downloading is reserved for premium members.');
         return;
     }
 
     showLoading();
     setTimeout(() => {
         hideLoading();
-        alert(`Téléchargement de "${book.title}" en cours...\n\nLe fichier aurait été sauvegardé sur votre appareil.`);
+        alert(`Downloading "${book.title}"...\n\nThe file would be saved to your device.`);
     }, 1200);
 }
 
+function openSearchBook(courseId, bookId) {
+    localStorage.setItem('currentCourse', courseId);
+    localStorage.setItem('currentCourseName', coursesData[courseId]?.title || 'Course');
+    readBook(bookId);
+}
+
+function downloadSearchBook(courseId, bookId) {
+    localStorage.setItem('currentCourse', courseId);
+    localStorage.setItem('currentCourseName', coursesData[courseId]?.title || 'Course');
+    downloadBook(bookId);
+}
+
+function initSearchPage() {
+    const searchInput = document.getElementById('globalBookSearch');
+    const resultsEl = document.getElementById('searchResults');
+    const resultCountEl = document.getElementById('searchResultCount');
+    const books = getAllBooks();
+
+    if (!searchInput || !resultsEl) return;
+
+    const render = () => {
+        const query = searchInput.value.trim().toLowerCase();
+        const results = books.filter(book => {
+            const haystack = `${book.title} ${book.author} ${book.description} ${book.courseTitle}`.toLowerCase();
+            return !query || haystack.includes(query);
+        });
+
+        if (resultCountEl) {
+            resultCountEl.textContent = `${results.length} result${results.length === 1 ? '' : 's'}`;
+        }
+
+        resultsEl.innerHTML = '';
+
+        if (!results.length) {
+            resultsEl.innerHTML = `
+                <div class="empty-books-state">
+                    <i class="fas fa-search"></i>
+                    <h4>No matching books</h4>
+                    <p>Try another title, author, course, or keyword.</p>
+                </div>
+            `;
+            return;
+        }
+
+        results.forEach(book => {
+            resultsEl.appendChild(createSearchResultElement(book));
+        });
+    };
+
+    searchInput.addEventListener('input', render);
+    render();
+}
+
+function initPastPapersPage() {
+    const searchInput = document.getElementById('pastPaperSearch');
+    const programFilter = document.getElementById('pastPaperProgram');
+    const listEl = document.getElementById('pastPapersList');
+    const countEl = document.getElementById('pastPaperCount');
+
+    if (!searchInput || !programFilter || !listEl) return;
+
+    const render = () => {
+        const query = searchInput.value.trim().toLowerCase();
+        const selectedProgram = programFilter.value;
+
+        const results = pastPapersData.filter(paper => {
+            const matchesProgram = selectedProgram === 'all' || paper.program === selectedProgram;
+            const haystack = `${paper.title} ${paper.course} ${paper.year} ${paper.type} ${paper.semester}`.toLowerCase();
+            const matchesQuery = !query || haystack.includes(query);
+            return matchesProgram && matchesQuery;
+        });
+
+        if (countEl) {
+            countEl.textContent = `${results.length} paper${results.length === 1 ? '' : 's'} available`;
+        }
+
+        listEl.innerHTML = '';
+
+        if (!results.length) {
+            listEl.innerHTML = `
+                <div class="empty-books-state">
+                    <i class="fas fa-file-alt"></i>
+                    <h4>No past papers found</h4>
+                    <p>Try another keyword or switch the selected program.</p>
+                </div>
+            `;
+            return;
+        }
+
+        results.forEach(paper => {
+            const card = document.createElement('div');
+            card.className = 'resource-card';
+            card.innerHTML = `
+                <div class="resource-card-head">
+                    <span class="resource-badge">${paper.program}</span>
+                    <span class="resource-badge muted">${paper.year}</span>
+                </div>
+                <h3>${paper.title}</h3>
+                <p>${paper.course} • ${paper.semester} • ${paper.type}</p>
+                <button class="btn-primary" onclick="openPastPaper(${paper.id})">
+                    <i class="fas fa-folder-open"></i> Open Paper
+                </button>
+            `;
+            listEl.appendChild(card);
+        });
+    };
+
+    searchInput.addEventListener('input', render);
+    programFilter.addEventListener('change', render);
+    render();
+}
+
+function openPastPaper(paperId) {
+    const paper = pastPapersData.find(item => item.id === paperId);
+    if (!paper) return;
+
+    showLoading();
+    setTimeout(() => {
+        hideLoading();
+        alert(`Opening past paper: "${paper.title}"\nCourse: ${paper.course}\nProgram: ${paper.program}\n\nThis action would normally open the selected past paper file.`);
+    }, 700);
+}
+
 // ============================================
-// PAGE PREMIUM
+// PREMIUM PAGE
 // ============================================
 
 function subscribe() {
@@ -417,43 +662,40 @@ function subscribe() {
     setTimeout(() => {
         hideLoading();
         localStorage.setItem('userPremium', 'true');
-        alert('Merci ! Vous êtes maintenant membre premium.\n\nTous les contenus premium sont désormais accessibles !');
+        alert('Thank you. You are now a premium member.\n\nAll premium content is now unlocked.');
         goBack();
     }, 1500);
 }
 
 // ============================================
-// INITIALISATION - ROUTEUR DE PAGES
+// INITIALIZATION
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function () {
-
-    // Page de connexion (index.html)
     if (document.querySelector('.auth-page')) {
         initAuthPage();
     }
 
-    // Page d'inscription séparée (signup.html)
     if (document.querySelector('.signup-page')) {
         initAuthPage();
     }
 
-    // Page d'accueil (home.html)
     if (document.querySelector('.home-page')) {
         initHomePage();
     }
 
-    // Pages de cours BBA / BSS (bba-courses.html, bss-courses.html)
-    if (document.querySelector('.courses-page')) {
-        // Les cours sont déjà affichés en HTML, rien à charger dynamiquement
-    }
-
-    // Page de détail d'un cours (course-detail.html)
     if (document.querySelector('.course-detail-page')) {
         initCourseDetailPage();
     }
 
-    // Animations communes sur les cartes
+    if (document.querySelector('.search-page')) {
+        initSearchPage();
+    }
+
+    if (document.querySelector('.past-papers-page')) {
+        initPastPapersPage();
+    }
+
     setTimeout(() => {
         document.querySelectorAll('.program-card, .course-card').forEach((card, index) => {
             card.style.animationDelay = `${index * 0.1}s`;
@@ -461,5 +703,5 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }, 100);
 
-    console.log('IUGB Library - Application initialisée avec succès');
+    console.log('IUGB Library - Application initialized successfully');
 });
