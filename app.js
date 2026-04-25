@@ -124,6 +124,9 @@ const pastPapersData = [
 ];
 
 let currentBookFilter = 'all';
+const bookFiles = {
+    1: 'les-livres/linear algebra.pdf'
+};
 
 // ============================================
 // UTILITIES
@@ -469,6 +472,7 @@ function createBookElement(book) {
     div.className = 'book-item';
 
     const isLocked = book.isPremium && !isUserPremium();
+    const titleAction = isLocked ? '' : `onclick="readBook(${book.id})" style="cursor: pointer;" title="Open PDF"`;
 
     div.innerHTML = `
         <div class="book-cover" style="background: linear-gradient(135deg, #6366f1, #ec4899); position: relative;">
@@ -476,7 +480,7 @@ function createBookElement(book) {
             ${isLocked ? '<div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 8px; font-size: 0.8rem;"><i class="fas fa-lock"></i> Premium</div>' : ''}
         </div>
         <div class="book-info">
-            <div class="book-title">${book.title}</div>
+            <div class="book-title" ${titleAction}>${book.title}</div>
             <div class="book-author">${book.author}</div>
             <div class="book-description">${book.description}</div>
             <div class="book-action">
@@ -498,6 +502,7 @@ function createSearchResultElement(book) {
     div.className = 'book-item';
 
     const isLocked = book.isPremium && !isUserPremium();
+    const titleAction = isLocked ? '' : `onclick="openSearchBook('${book.courseId}', ${book.id})" style="cursor: pointer;" title="Open PDF"`;
 
     div.innerHTML = `
         <div class="book-cover" style="background: linear-gradient(135deg, #0f766e, #0ea5e9); position: relative;">
@@ -505,7 +510,7 @@ function createSearchResultElement(book) {
             ${isLocked ? '<div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 8px; font-size: 0.8rem;"><i class="fas fa-lock"></i> Premium</div>' : ''}
         </div>
         <div class="book-info">
-            <div class="book-title">${book.title}</div>
+            <div class="book-title" ${titleAction}>${book.title}</div>
             <div class="book-author">${book.author}</div>
             <div class="book-description">${book.description}</div>
             <div class="book-meta">${book.courseTitle}</div>
@@ -544,6 +549,12 @@ function readBook(bookId) {
         return;
     }
 
+    const filePath = bookFiles[book.id];
+    if (filePath) {
+        window.open(filePath, '_blank');
+        return;
+    }
+
     showLoading();
     setTimeout(() => {
         hideLoading();
@@ -559,6 +570,17 @@ function downloadBook(bookId) {
 
     if (book.isPremium && !isUserPremium()) {
         alert('Downloading is reserved for premium members.');
+        return;
+    }
+
+    const filePath = bookFiles[book.id];
+    if (filePath) {
+        const link = document.createElement('a');
+        link.href = filePath;
+        link.download = filePath.split('/').pop();
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
         return;
     }
 
