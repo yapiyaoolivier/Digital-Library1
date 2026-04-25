@@ -13,7 +13,7 @@ const coursesData = {
         description: 'Core mathematics resources for problem-solving, theory, and practice.',
         books: [
             { id: 1, title: 'Linear Algebra', author: 'David C. Lay', description: 'Fundamental concepts', isPremium: false },
-            { id: 2, title: 'Integral Calculus', author: 'James Stewart', description: 'Advanced methods', isPremium: true },
+            { id: 2, title: 'Calculus', author: 'James Stewart', description: 'Advanced methods', isPremium: true },
             { id: 3, title: 'Analytical Geometry', author: 'L. Loomis', description: 'Theory and applications', isPremium: false },
             { id: 4, title: 'Mathematical Statistics', author: 'Sheldon Ross', description: 'Probability concepts', isPremium: true },
             { id: 5, title: 'Differential Equations', author: 'Dennis Zill', description: 'Step-by-step solutions', isPremium: false },
@@ -751,5 +751,5 @@ document.addEventListener('DOMContentLoaded', function () {
         initScrollReveal();
     }, 100);
 
-    console.log('IUGB Library - Application initialized successfully');
+    console.log('Scholar Hub - Application initialized successfully');
 });
