@@ -124,6 +124,7 @@ const pastPapersData = [
 ];
 
 let currentBookFilter = 'all';
+const BOOK_RATINGS_KEY = 'bookRatings';
 const bookFiles = {
     1: 'les-livres/linear algebra.pdf'
 };
@@ -174,6 +175,83 @@ function getAllBooks() {
             courseTitle: course.title
         }))
     );
+}
+
+function getStoredRatings() {
+    try {
+        return JSON.parse(localStorage.getItem(BOOK_RATINGS_KEY)) || {};
+    } catch (error) {
+        return {};
+    }
+}
+
+function getBookRating(bookId) {
+    return Number(getStoredRatings()[bookId] || 0);
+}
+
+function saveBookRating(bookId, rating) {
+    const ratings = getStoredRatings();
+    ratings[bookId] = rating;
+    localStorage.setItem(BOOK_RATINGS_KEY, JSON.stringify(ratings));
+}
+
+function getCourseRating(courseId) {
+    const courseInfo = coursesData[courseId];
+    if (!courseInfo) return courseMetadata[courseId]?.rating || '4.8/5';
+
+    const ratedBooks = courseInfo.books
+        .map(book => getBookRating(book.id))
+        .filter(rating => rating > 0);
+
+    if (!ratedBooks.length) {
+        return courseMetadata[courseId]?.rating || '4.8/5';
+    }
+
+    const average = ratedBooks.reduce((sum, rating) => sum + rating, 0) / ratedBooks.length;
+    return `${average.toFixed(1)}/5`;
+}
+
+function renderRatingStars(bookId) {
+    const rating = getBookRating(bookId);
+
+    return `
+        <div class="book-rating" aria-label="Book rating">
+            <span class="book-rating-label">Votre note</span>
+            <div class="rating-stars" role="group" aria-label="Rate this book">
+                ${[1, 2, 3, 4, 5].map(star => `
+                    <button
+                        type="button"
+                        class="rating-star${star <= rating ? ' active' : ''}"
+                        onclick="rateBook(${bookId}, ${star}, event)"
+                        aria-label="Rate ${star} star${star > 1 ? 's' : ''}"
+                    >
+                        <i class="fas fa-star"></i>
+                    </button>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function updateCourseRatingDisplay(courseId = localStorage.getItem('currentCourse')) {
+    const ratingEl = document.getElementById('courseRating');
+    if (ratingEl && courseId) {
+        ratingEl.textContent = getCourseRating(courseId);
+    }
+}
+
+function rateBook(bookId, rating, event) {
+    event?.stopPropagation();
+    saveBookRating(bookId, rating);
+
+    if (document.querySelector('.course-detail-page')) {
+        updateCourseBooks();
+        updateCourseRatingDisplay();
+    }
+
+    if (document.querySelector('.search-page')) {
+        renderSearchResults();
+    }
 }
 
 function applyScrollReveal(elements, stepDelay = 0.08) {
@@ -424,6 +502,7 @@ function updateCourseBooks() {
     const courseId = localStorage.getItem('currentCourse');
     const filteredBooks = getFilteredBooks(courseId);
     renderBooksList(filteredBooks);
+    updateCourseRatingDisplay(courseId);
 }
 
 function initCourseDetailPage() {
@@ -449,7 +528,7 @@ function initCourseDetailPage() {
     if (descriptionEl) descriptionEl.textContent = courseInfo.description;
     if (iconEl) iconEl.innerHTML = `<i class="${courseInfo.icon}"></i>`;
     if (enrolledCountEl) enrolledCountEl.textContent = courseMetadata[courseId]?.enrolledCount || 250;
-    if (ratingEl) ratingEl.textContent = courseMetadata[courseId]?.rating || '4.8/5';
+    if (ratingEl) ratingEl.textContent = getCourseRating(courseId);
     if (bookCountEl) bookCountEl.textContent = courseInfo.books.length;
 
     const noticeEl = document.getElementById('noPremiumNotice');
@@ -483,6 +562,7 @@ function createBookElement(book) {
             <div class="book-title" ${titleAction}>${book.title}</div>
             <div class="book-author">${book.author}</div>
             <div class="book-description">${book.description}</div>
+            ${renderRatingStars(book.id)}
             <div class="book-action">
                 <button class="btn-read" onclick="readBook(${book.id})" ${isLocked ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
                     <i class="fas fa-book-open"></i> Read
@@ -514,6 +594,7 @@ function createSearchResultElement(book) {
             <div class="book-author">${book.author}</div>
             <div class="book-description">${book.description}</div>
             <div class="book-meta">${book.courseTitle}</div>
+            ${renderRatingStars(book.id)}
             <div class="book-action">
                 <button class="btn-read" onclick="openSearchBook('${book.courseId}', ${book.id})" ${isLocked ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
                     <i class="fas fa-book-open"></i> Read
@@ -603,7 +684,7 @@ function downloadSearchBook(courseId, bookId) {
     downloadBook(bookId);
 }
 
-function initSearchPage() {
+function renderSearchResults() {
     const searchInput = document.getElementById('globalBookSearch');
     const resultsEl = document.getElementById('searchResults');
     const resultCountEl = document.getElementById('searchResultCount');
@@ -611,39 +692,46 @@ function initSearchPage() {
 
     if (!searchInput || !resultsEl) return;
 
-    const render = () => {
-        const query = searchInput.value.trim().toLowerCase();
-        const results = books.filter(book => {
-            const haystack = `${book.title} ${book.author} ${book.description} ${book.courseTitle}`.toLowerCase();
-            return !query || haystack.includes(query);
-        });
+    const query = searchInput.value.trim().toLowerCase();
+    const results = books.filter(book => {
+        const haystack = `${book.title} ${book.author} ${book.description} ${book.courseTitle}`.toLowerCase();
+        return !query || haystack.includes(query);
+    });
 
-        if (resultCountEl) {
-            resultCountEl.textContent = `${results.length} result${results.length === 1 ? '' : 's'}`;
-        }
+    if (resultCountEl) {
+        resultCountEl.textContent = `${results.length} result${results.length === 1 ? '' : 's'}`;
+    }
 
-        resultsEl.innerHTML = '';
+    resultsEl.innerHTML = '';
 
-        if (!results.length) {
-            resultsEl.innerHTML = `
-                <div class="empty-books-state">
-                    <i class="fas fa-search"></i>
-                    <h4>No matching books</h4>
-                    <p>Try another title, author, course, or keyword.</p>
-                </div>
-            `;
-            return;
-        }
+    if (!results.length) {
+        resultsEl.innerHTML = `
+            <div class="empty-books-state">
+                <i class="fas fa-search"></i>
+                <h4>No matching books</h4>
+                <p>Try another title, author, course, or keyword.</p>
+            </div>
+        `;
+        return;
+    }
 
-        results.forEach(book => {
-            resultsEl.appendChild(createSearchResultElement(book));
-        });
+    results.forEach(book => {
+        resultsEl.appendChild(createSearchResultElement(book));
+    });
 
-        applyScrollReveal(resultsEl.querySelectorAll('.book-item'));
-    };
+    applyScrollReveal(resultsEl.querySelectorAll('.book-item'));
+}
 
-    searchInput.addEventListener('input', render);
-    render();
+function initSearchPage() {
+    const searchInput = document.getElementById('globalBookSearch');
+    if (!searchInput) return;
+
+    if (!searchInput.dataset.ratingBound) {
+        searchInput.addEventListener('input', renderSearchResults);
+        searchInput.dataset.ratingBound = 'true';
+    }
+
+    renderSearchResults();
 }
 
 function initPastPapersPage() {
