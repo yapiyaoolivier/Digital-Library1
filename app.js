@@ -383,7 +383,7 @@ function initAuthPage() {
                 showLoading();
                 setTimeout(() => {
                     hideLoading();
-                    window.location.href = 'home.html';
+                    window.location.href = 'index.html';
                 }, 1000);
             }
         });
@@ -432,7 +432,7 @@ function initAuthPage() {
                 showLoading();
                 setTimeout(() => {
                     hideLoading();
-                    window.location.href = 'home.html';
+                    window.location.href = 'index.html';
                 }, 1000);
             }
         });
@@ -545,7 +545,7 @@ function initCourseDetailPage() {
     const courseInfo = coursesData[courseId];
 
     if (!courseInfo) {
-        window.location.href = 'home.html';
+        window.location.href = 'index.html';
         return;
     }
 
