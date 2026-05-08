@@ -126,7 +126,41 @@ const pastPapersData = [
 let currentBookFilter = 'all';
 const BOOK_RATINGS_KEY = 'bookRatings';
 const bookFiles = {
-    1: 'les-livres/linear algebra.pdf'
+    1: 'les-livres/linear algebra.pdf',
+    2: 'les-livres/linear algebra.pdf',
+    3: 'les-livres/axler.pdf',
+    4: 'les-livres/axler.pdf',
+    5: 'les-livres/linear algebra.pdf',
+    6: 'les-livres/axler.pdf',
+    7: 'livres/project-management.pdf',
+    8: 'livres/project-management.pdf',
+    9: 'livres/project-management.pdf',
+    10: 'livres/project-management.pdf',
+    11: 'livres/think-python.pdf',
+    12: 'livres/open-data-structures.pdf',
+    13: 'livres/the-missing-link.pdf',
+    14: 'livres/database-design.pdf',
+    15: 'livres/open-data-structures.pdf',
+    16: 'les-livres/linear algebra.pdf',
+    17: 'livres/open-data-structures.pdf',
+    18: 'livres/open-data-structures.pdf',
+    19: 'livres/open-data-structures.pdf',
+    20: 'livres/project-management.pdf',
+    21: 'livres/project-management.pdf',
+    22: 'livres/project-management.pdf',
+    23: 'livres/project-management.pdf',
+    24: 'livres/project-management.pdf',
+    25: 'livres/the-missing-link.pdf',
+    26: 'livres/project-management.pdf',
+    27: 'livres/project-management.pdf',
+    28: 'livres/project-management.pdf',
+    29: 'livres/project-management.pdf',
+    30: 'livres/project-management.pdf',
+    31: 'livres/project-management.pdf',
+    32: 'livres/database-design.pdf',
+    33: 'livres/database-design.pdf',
+    34: 'livres/database-design.pdf',
+    35: 'livres/database-design.pdf'
 };
 
 // ============================================

@@ -4,10 +4,742 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scholar Hub - BSS Courses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bss-bg: #06131a;
+            --bss-panel: rgba(7, 28, 38, 0.76);
+            --bss-panel-strong: rgba(12, 43, 56, 0.94);
+            --bss-line: rgba(163, 230, 255, 0.18);
+            --bss-text: #edf8fb;
+            --bss-soft: #98b6c0;
+            --bss-cyan: #66e3ff;
+            --bss-gold: #ffc857;
+            --bss-coral: #ff7a59;
+            --bss-green: #6ef3b0;
+        }
+
+        body.courses-page.bss-reimagined {
+            margin: 0;
+            padding-bottom: 0;
+            color: var(--bss-text);
+            background:
+                radial-gradient(circle at top left, rgba(102, 227, 255, 0.16), transparent 28%),
+                radial-gradient(circle at 85% 15%, rgba(255, 122, 89, 0.14), transparent 24%),
+                radial-gradient(circle at 50% 100%, rgba(110, 243, 176, 0.14), transparent 30%),
+                linear-gradient(160deg, #041018 0%, #08212c 42%, #031016 100%);
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+
+        .bss-shell {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .bss-noise,
+        .bss-grid,
+        .bss-orb,
+        .bss-particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .bss-grid {
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 44px 44px;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+            z-index: -4;
+        }
+
+        .bss-noise {
+            opacity: 0.08;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.7) 0 1px, transparent 1px),
+                radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.4) 0 1px, transparent 1px),
+                radial-gradient(circle at 60% 80%, rgba(255, 255, 255, 0.55) 0 1px, transparent 1px);
+            background-size: 180px 180px;
+            animation: noiseDrift 18s linear infinite;
+            z-index: -5;
+        }
+
+        .bss-particles {
+            z-index: -3;
+        }
+
+        .bss-particles span {
+            position: absolute;
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(102, 227, 255, 0.32);
+            box-shadow: 0 0 20px rgba(102, 227, 255, 0.4);
+            animation: particleRise linear infinite;
+        }
+
+        .bss-orb {
+            z-index: -2;
+            filter: blur(20px);
+        }
+
+        .bss-orb::before,
+        .bss-orb::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.55;
+            animation: orbFloat 14s ease-in-out infinite;
+        }
+
+        .bss-orb::before {
+            width: 24rem;
+            height: 24rem;
+            top: 6%;
+            left: -8%;
+            background: radial-gradient(circle, rgba(102, 227, 255, 0.46), transparent 72%);
+        }
+
+        .bss-orb::after {
+            width: 32rem;
+            height: 32rem;
+            right: -10%;
+            top: 30%;
+            background: radial-gradient(circle, rgba(255, 200, 87, 0.28), transparent 68%);
+            animation-delay: -6s;
+        }
+
+        .bss-page {
+            position: relative;
+            z-index: 1;
+            width: min(1200px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 24px 0 88px;
+        }
+
+        .bss-topbar,
+        .bss-glass,
+        .bss-course-card,
+        .bss-category,
+        .bss-feature-card,
+        .bss-story-card,
+        .bss-banner,
+        .bss-mini-card,
+        .bss-gallery-card {
+            backdrop-filter: blur(16px);
+            background: linear-gradient(180deg, rgba(12, 38, 48, 0.84), rgba(7, 22, 30, 0.72));
+            border: 1px solid var(--bss-line);
+            box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
+        }
+
+        .bss-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 12px 14px;
+            border-radius: 28px;
+            position: sticky;
+            top: 14px;
+            z-index: 30;
+            margin-bottom: 24px;
+        }
+
+        .bss-topbar h1 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            letter-spacing: 0.04em;
+            margin: 0;
+        }
+
+        .bss-topbar-left,
+        .bss-topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bss-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            color: var(--bss-text);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.9rem;
+        }
+
+        .btn-back.bss-back {
+            color: var(--bss-text);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-back.bss-back:hover {
+            background: rgba(102, 227, 255, 0.16);
+            color: var(--bss-cyan);
+        }
+
+        .btn-premium-header.bss-premium {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 200, 87, 0.2), rgba(255, 122, 89, 0.2));
+            color: var(--bss-gold);
+            -webkit-text-fill-color: unset;
+            border: 1px solid rgba(255, 200, 87, 0.25);
+        }
+
+        .bss-hero {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 26px;
+            align-items: stretch;
+            margin-bottom: 28px;
+        }
+
+        .bss-glass {
+            border-radius: 36px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bss-glass::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(130deg, rgba(255, 255, 255, 0.12), transparent 40%, transparent);
+            pointer-events: none;
+        }
+
+        .bss-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(102, 227, 255, 0.12);
+            color: var(--bss-cyan);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            margin-bottom: 18px;
+        }
+
+        .bss-hero h2 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(2.6rem, 5vw, 4.9rem);
+            line-height: 0.95;
+            margin: 0 0 18px;
+            max-width: 10ch;
+        }
+
+        .bss-gradient {
+            background: linear-gradient(135deg, var(--bss-cyan), #ffffff 45%, var(--bss-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bss-hero p {
+            color: var(--bss-soft);
+            font-size: 1.03rem;
+            max-width: 58ch;
+            margin-bottom: 24px;
+        }
+
+        .bss-actions,
+        .bss-stats,
+        .bss-meta-row,
+        .bss-tag-row,
+        .bss-banner-grid,
+        .bss-mini-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .bss-cta,
+        .bss-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 52px;
+            padding: 0 20px;
+            border-radius: 16px;
+            font-weight: 700;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        .bss-cta {
+            background: linear-gradient(135deg, var(--bss-cyan), #1dc8ff 60%, #d9fcff);
+            color: #03202b;
+            box-shadow: 0 16px 40px rgba(102, 227, 255, 0.28);
+        }
+
+        .bss-outline {
+            color: var(--bss-text);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .bss-cta:hover,
+        .bss-outline:hover,
+        .bss-course-card:hover,
+        .bss-category:hover,
+        .bss-feature-card:hover,
+        .bss-story-card:hover,
+        .bss-gallery-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .bss-stats {
+            margin-top: 24px;
+        }
+
+        .bss-stat {
+            min-width: 140px;
+            padding: 14px 16px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .bss-stat strong {
+            display: block;
+            font-size: 1.4rem;
+            font-family: "Space Grotesk", sans-serif;
+            margin-bottom: 4px;
+        }
+
+        .bss-stat span {
+            color: var(--bss-soft);
+            font-size: 0.9rem;
+        }
+
+        .bss-hero-visual {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .bss-visual-main {
+            position: relative;
+            min-height: 430px;
+            border-radius: 30px;
+            overflow: hidden;
+            background:
+                linear-gradient(180deg, rgba(4, 12, 18, 0.1), rgba(4, 12, 18, 0.72)),
+                url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&q=80") center/cover;
+            box-shadow: inset 0 -120px 100px rgba(2, 11, 17, 0.65);
+        }
+
+        .bss-floating-panel {
+            position: absolute;
+            border-radius: 24px;
+            padding: 16px;
+            background: rgba(4, 17, 24, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(12px);
+            animation: drift 5s ease-in-out infinite;
+        }
+
+        .bss-panel-top {
+            top: 18px;
+            right: 18px;
+            min-width: 170px;
+        }
+
+        .bss-panel-bottom {
+            left: 18px;
+            bottom: 18px;
+            max-width: 220px;
+            animation-delay: -2.2s;
+        }
+
+        .bss-floating-panel strong {
+            display: block;
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+
+        .bss-floating-panel span,
+        .bss-floating-panel p {
+            color: var(--bss-soft);
+            font-size: 0.88rem;
+            margin: 0;
+        }
+
+        .bss-section {
+            margin-top: 28px;
+        }
+
+        .bss-section-header {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .bss-section-header h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(1.4rem, 2vw, 2rem);
+            margin-bottom: 6px;
+        }
+
+        .bss-section-header p {
+            max-width: 60ch;
+            color: var(--bss-soft);
+        }
+
+        .bss-course-grid,
+        .bss-category-grid,
+        .bss-feature-grid,
+        .bss-story-grid,
+        .bss-gallery-grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .bss-course-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .bss-category-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .bss-feature-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .bss-story-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .bss-gallery-grid {
+            grid-template-columns: 1.2fr 0.8fr 0.9fr;
+        }
+
+        .bss-course-card,
+        .bss-category,
+        .bss-feature-card,
+        .bss-story-card,
+        .bss-gallery-card {
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bss-course-card {
+            cursor: pointer;
+            padding: 18px;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            background-size: cover;
+            background-position: center;
+            isolation: isolate;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .bss-course-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.03), rgba(2, 10, 15, 0.85));
+            z-index: -1;
+        }
+
+        .bss-course-card::after {
+            content: "";
+            position: absolute;
+            inset: auto 0 0 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .bss-course-card:hover::after {
+            opacity: 1;
+        }
+
+        .bss-badge {
+            align-self: start;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            font-size: 0.8rem;
+            margin-bottom: auto;
+        }
+
+        .bss-course-card h4,
+        .bss-category h4,
+        .bss-feature-card h4,
+        .bss-story-card h4,
+        .bss-gallery-card h4 {
+            font-family: "Space Grotesk", sans-serif;
+            margin: 0 0 8px;
+        }
+
+        .bss-course-card p,
+        .bss-category p,
+        .bss-feature-card p,
+        .bss-story-card p,
+        .bss-gallery-card p {
+            color: rgba(237, 248, 251, 0.78);
+            margin-bottom: 14px;
+        }
+
+        .bss-meta-row {
+            margin-top: auto;
+        }
+
+        .bss-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 0.82rem;
+        }
+
+        .bss-category,
+        .bss-feature-card,
+        .bss-story-card,
+        .bss-gallery-card {
+            padding: 22px;
+        }
+
+        .bss-category i,
+        .bss-feature-card i {
+            width: 50px;
+            height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            background: rgba(102, 227, 255, 0.12);
+            color: var(--bss-cyan);
+        }
+
+        .bss-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 11px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            color: var(--bss-soft);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .bss-banner {
+            border-radius: 34px;
+            padding: 24px;
+            margin-top: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bss-banner::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.07), transparent);
+            transform: translateX(-100%);
+            animation: sweep 8s linear infinite;
+        }
+
+        .bss-banner-grid {
+            align-items: stretch;
+        }
+
+        .bss-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .bss-mini-card {
+            padding: 18px;
+            border-radius: 22px;
+        }
+
+        .bss-mini-card strong {
+            display: block;
+            margin-bottom: 8px;
+            font-family: "Space Grotesk", sans-serif;
+        }
+
+        .bss-gallery-card {
+            min-height: 260px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            overflow: hidden;
+        }
+
+        .bss-gallery-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(3, 10, 16, 0.82));
+        }
+
+        .bss-gallery-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .bss-marquee {
+            overflow: hidden;
+            margin-top: 28px;
+            padding: 14px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .bss-marquee-track {
+            display: flex;
+            gap: 18px;
+            width: max-content;
+            animation: marquee 24s linear infinite;
+        }
+
+        .bss-marquee-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--bss-text);
+            white-space: nowrap;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.08); }
+        }
+
+        @keyframes particleRise {
+            0% { transform: translateY(110vh) scale(0.8); opacity: 0; }
+            10%, 85% { opacity: 1; }
+            100% { transform: translateY(-15vh) scale(1.3); opacity: 0; }
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        @keyframes sweep {
+            0% { transform: translateX(-120%); }
+            100% { transform: translateX(120%); }
+        }
+
+        @keyframes noiseDrift {
+            from { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(10px, -8px, 0); }
+            to { transform: translate3d(0, 0, 0); }
+        }
+
+        @media (max-width: 1100px) {
+            .bss-hero,
+            .bss-course-grid,
+            .bss-category-grid,
+            .bss-feature-grid,
+            .bss-gallery-grid,
+            .bss-story-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .bss-hero {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .bss-page {
+                width: min(100% - 20px, 1200px);
+                padding-top: 16px;
+            }
+
+            .bss-topbar {
+                border-radius: 22px;
+                padding: 10px;
+            }
+
+            .bss-chip {
+                display: none;
+            }
+
+            .bss-glass,
+            .bss-banner,
+            .bss-course-card,
+            .bss-category,
+            .bss-feature-card,
+            .bss-story-card,
+            .bss-gallery-card {
+                border-radius: 24px;
+            }
+
+            .bss-hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .bss-course-grid,
+            .bss-category-grid,
+            .bss-feature-grid,
+            .bss-gallery-grid,
+            .bss-story-grid,
+            .bss-mini-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bss-visual-main {
+                min-height: 330px;
+            }
+        }
+    </style>
 </head>
-<body class="courses-page">
+<body class="courses-page bss-reimagined">
     <div id="loadingOverlay" class="loading-overlay" style="display: none;">
         <div class="loading-content">
             <div class="loading-spinner">
@@ -19,67 +751,307 @@
         </div>
     </div>
 
-    <!-- Header -->
-    <header class="app-header">
-        <div class="header-top">
-            <button class="btn-back" onclick="goBack()">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <h1>BSS Courses</h1>
-            <a href="premium.html" class="btn-premium-header">
-                <i class="fas fa-gem"></i>
-            </a>
-        </div>
-    </header>
+    <div class="bss-shell">
+        <div class="bss-noise"></div>
+        <div class="bss-grid"></div>
+        <div class="bss-orb"></div>
+        <div class="bss-particles" id="bssParticles"></div>
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-        <a href="home.html">Home</a> / <span>BSS Courses</span>
+        <main class="bss-page">
+            <header class="bss-topbar">
+                <div class="bss-topbar-left">
+                    <button class="btn-back bss-back" onclick="goBack()" aria-label="Go back">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h1>BSS Universe</h1>
+                        <span class="section-subtitle">Bold learning experiences for science students</span>
+                    </div>
+                </div>
+                <div class="bss-topbar-right">
+                    <span class="bss-chip"><i class="fas fa-bolt"></i> Animated library</span>
+                    <a href="premium.html" class="btn-premium-header bss-premium" aria-label="Premium access">
+                        <i class="fas fa-gem"></i>
+                    </a>
+                </div>
+            </header>
+
+            <section class="bss-hero">
+                <div class="bss-glass">
+                    <span class="bss-kicker"><i class="fas fa-satellite-dish"></i> BSS Digital Campus</span>
+                    <h2>Explore a <span class="bss-gradient">new generation</span> of course pages.</h2>
+                    <p>
+                        Une page totalement refaite, plus vivante, avec des images immersives, des mouvements partout,
+                        plusieurs rubriques et des catégories claires pour naviguer entre les matières scientifiques.
+                    </p>
+                    <div class="bss-actions">
+                        <a href="#bss-courses" class="bss-cta"><i class="fas fa-compass"></i> Start exploring</a>
+                        <a href="#bss-categories" class="bss-outline"><i class="fas fa-layer-group"></i> View categories</a>
+                    </div>
+                    <div class="bss-stats">
+                        <div class="bss-stat">
+                            <strong>08</strong>
+                            <span>Learning paths</span>
+                        </div>
+                        <div class="bss-stat">
+                            <strong>1.2k+</strong>
+                            <span>Student visits</span>
+                        </div>
+                        <div class="bss-stat">
+                            <strong>24/7</strong>
+                            <span>Digital access</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bss-hero-visual">
+                    <div class="bss-visual-main">
+                        <div class="bss-floating-panel bss-panel-top">
+                            <strong>Live Zones</strong>
+                            <span>Math, data, code, and study systems</span>
+                        </div>
+                        <div class="bss-floating-panel bss-panel-bottom">
+                            <strong>Immersive vibe</strong>
+                            <p>Images, glass effects, animated lights, and modern navigation blocks.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="bss-marquee">
+                <div class="bss-marquee-track">
+                    <span class="bss-marquee-item"><i class="fas fa-infinity"></i> Dynamic sections</span>
+                    <span class="bss-marquee-item"><i class="fas fa-image"></i> Image-heavy layout</span>
+                    <span class="bss-marquee-item"><i class="fas fa-wave-square"></i> Motion effects</span>
+                    <span class="bss-marquee-item"><i class="fas fa-book-open"></i> Smart course access</span>
+                    <span class="bss-marquee-item"><i class="fas fa-th-large"></i> Multiple categories</span>
+                    <span class="bss-marquee-item"><i class="fas fa-star"></i> Premium feel</span>
+                    <span class="bss-marquee-item"><i class="fas fa-infinity"></i> Dynamic sections</span>
+                    <span class="bss-marquee-item"><i class="fas fa-image"></i> Image-heavy layout</span>
+                    <span class="bss-marquee-item"><i class="fas fa-wave-square"></i> Motion effects</span>
+                    <span class="bss-marquee-item"><i class="fas fa-book-open"></i> Smart course access</span>
+                </div>
+            </div>
+
+            <section class="bss-section" id="bss-courses">
+                <div class="bss-section-header">
+                    <div>
+                        <h3>Main Courses</h3>
+                        <p>Les matières principales sont maintenant présentées comme de vraies cartes éditoriales, avec visuels, badges et infos rapides.</p>
+                    </div>
+                </div>
+
+                <div class="bss-course-grid">
+                    <article class="bss-course-card" onclick="goToCourseDetail('mathematics', 'Mathematics')" style="background-image: url('https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1000&q=80');">
+                        <span class="bss-badge"><i class="fas fa-calculator"></i> Foundation</span>
+                        <h4>Mathematics</h4>
+                        <p>Algebra, geometry, calculus, and problem-solving journeys with a high-focus learning flow.</p>
+                        <div class="bss-meta-row">
+                            <span class="bss-meta"><i class="fas fa-book"></i> 12 books</span>
+                            <span class="bss-meta"><i class="fas fa-signal"></i> Beginner</span>
+                        </div>
+                    </article>
+
+                    <article class="bss-course-card" onclick="goToCourseDetail('met', 'Methods & Techniques')" style="background-image: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1000&q=80');">
+                        <span class="bss-badge"><i class="fas fa-book-reader"></i> Study System</span>
+                        <h4>MET</h4>
+                        <p>Methods and techniques to study faster, organize better, and retain more information.</p>
+                        <div class="bss-meta-row">
+                            <span class="bss-meta"><i class="fas fa-book"></i> 8 books</span>
+                            <span class="bss-meta"><i class="fas fa-signal"></i> Beginner</span>
+                        </div>
+                    </article>
+
+                    <article class="bss-course-card" onclick="goToCourseDetail('cs', 'Computer Science')" style="background-image: url('https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1000&q=80');">
+                        <span class="bss-badge"><i class="fas fa-laptop-code"></i> Tech Track</span>
+                        <h4>Computer Science</h4>
+                        <p>Programming, software logic, web systems, and digital building skills for modern learners.</p>
+                        <div class="bss-meta-row">
+                            <span class="bss-meta"><i class="fas fa-book"></i> 15 books</span>
+                            <span class="bss-meta"><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+                    </article>
+
+                    <article class="bss-course-card" onclick="goToCourseDetail('statistics', 'Statistics')" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80');">
+                        <span class="bss-badge"><i class="fas fa-chart-column"></i> Data Lens</span>
+                        <h4>Statistics</h4>
+                        <p>Probability, interpretation, and data analysis with a visual and applied perspective.</p>
+                        <div class="bss-meta-row">
+                            <span class="bss-meta"><i class="fas fa-book"></i> 10 books</span>
+                            <span class="bss-meta"><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="bss-section" id="bss-categories">
+                <div class="bss-section-header">
+                    <div>
+                        <h3>Rubrics & Categories</h3>
+                        <p>Plusieurs blocs ont été ajoutés pour donner de la profondeur à la page et mieux organiser le contenu.</p>
+                    </div>
+                </div>
+
+                <div class="bss-category-grid">
+                    <article class="bss-category">
+                        <i class="fas fa-brain"></i>
+                        <h4>Core Thinking</h4>
+                        <p>Les bases logiques, analytiques et méthodologiques pour construire un socle solide.</p>
+                        <div class="bss-tag-row">
+                            <span class="bss-tag">Math</span>
+                            <span class="bss-tag">Logic</span>
+                            <span class="bss-tag">Practice</span>
+                        </div>
+                    </article>
+
+                    <article class="bss-category">
+                        <i class="fas fa-microchip"></i>
+                        <h4>Digital Skills</h4>
+                        <p>Une zone orientée programmation, algorithmique, systèmes et outils numériques.</p>
+                        <div class="bss-tag-row">
+                            <span class="bss-tag">Code</span>
+                            <span class="bss-tag">Web</span>
+                            <span class="bss-tag">Projects</span>
+                        </div>
+                    </article>
+
+                    <article class="bss-category">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Data Insight</h4>
+                        <p>Pour lire les chiffres, comprendre les tendances et interpréter les résultats avec rigueur.</p>
+                        <div class="bss-tag-row">
+                            <span class="bss-tag">Stats</span>
+                            <span class="bss-tag">Analysis</span>
+                            <span class="bss-tag">Inference</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="bss-banner">
+                <div class="bss-section-header">
+                    <div>
+                        <h3>What Changed</h3>
+                        <p>La page a maintenant plus d’impact visuel, plus d’animation et plus de contenu structuré.</p>
+                    </div>
+                </div>
+
+                <div class="bss-mini-grid">
+                    <div class="bss-mini-card">
+                        <strong>Animated background</strong>
+                        <p>Grille, lumières, particules et reflets pour une sensation plus premium.</p>
+                    </div>
+                    <div class="bss-mini-card">
+                        <strong>Image-first cards</strong>
+                        <p>Chaque cours principal devient une carte immersive avec photo et infos utiles.</p>
+                    </div>
+                    <div class="bss-mini-card">
+                        <strong>More sections</strong>
+                        <p>Ajout de rubriques, catégories, highlights et galerie pour enrichir la page.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bss-section">
+                <div class="bss-section-header">
+                    <div>
+                        <h3>Learning Experience</h3>
+                        <p>Des blocs complémentaires donnent l’impression d’un vrai hub de contenu plutôt qu’une simple liste de cours.</p>
+                    </div>
+                </div>
+
+                <div class="bss-feature-grid">
+                    <article class="bss-feature-card">
+                        <i class="fas fa-rocket"></i>
+                        <h4>Fast Navigation</h4>
+                        <p>Les actions principales restent visibles, fluides et faciles à atteindre sur desktop comme sur mobile.</p>
+                    </article>
+                    <article class="bss-feature-card">
+                        <i class="fas fa-photo-film"></i>
+                        <h4>Visual Identity</h4>
+                        <p>Le design s’éloigne d’un style générique pour prendre une direction plus éditoriale et ambitieuse.</p>
+                    </article>
+                    <article class="bss-feature-card">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>Content Depth</h4>
+                        <p>La page respire davantage grâce à plusieurs couches visuelles, plusieurs zones et plus de hiérarchie.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="bss-section">
+                <div class="bss-section-header">
+                    <div>
+                        <h3>Discovery Gallery</h3>
+                        <p>Une galerie complémentaire pour prolonger l’univers visuel et donner une impression plus riche et plus “infinie”.</p>
+                    </div>
+                </div>
+
+                <div class="bss-gallery-grid">
+                    <article class="bss-gallery-card" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80');">
+                        <h4>Collaborative Labs</h4>
+                        <p>Spaces for experiments, teamwork, and course exploration.</p>
+                    </article>
+                    <article class="bss-gallery-card" style="background-image: url('https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80');">
+                        <h4>Data Rooms</h4>
+                        <p>Study visualizations and analytical practice sessions.</p>
+                    </article>
+                    <article class="bss-gallery-card" style="background-image: url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1200&q=80');">
+                        <h4>Deep Reading</h4>
+                        <p>Long-form books, notes, and focused revision cycles.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="bss-section">
+                <div class="bss-section-header">
+                    <div>
+                        <h3>Student Stories</h3>
+                        <p>Deux rubriques narratives pour renforcer l’ambiance et casser l’effet “catalogue”.</p>
+                    </div>
+                </div>
+
+                <div class="bss-story-grid">
+                    <article class="bss-story-card">
+                        <h4>Build your own path</h4>
+                        <p>Commence avec les bases en mathématiques, ajoute les méthodes d’apprentissage, puis élargis vers le code et la data selon ton niveau.</p>
+                        <div class="bss-tag-row">
+                            <span class="bss-tag"><i class="fas fa-route"></i> Progression fluide</span>
+                            <span class="bss-tag"><i class="fas fa-fire"></i> Interface vivante</span>
+                        </div>
+                    </article>
+                    <article class="bss-story-card">
+                        <h4>Study with rhythm</h4>
+                        <p>Les animations restent légères mais nombreuses pour créer une page qui donne envie d’explorer sans devenir lourde à utiliser.</p>
+                        <div class="bss-tag-row">
+                            <span class="bss-tag"><i class="fas fa-mobile-screen"></i> Responsive</span>
+                            <span class="bss-tag"><i class="fas fa-sparkles"></i> Premium mood</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
     </div>
 
-    <!-- Courses Grid -->
-    <section class="courses-container">
-        <div class="course-card" onclick="goToCourseDetail('mathematics', 'Mathematics')">
-            <div class="course-icon mathematics">
-                <i class="fas fa-calculator"></i>
-            </div>
-            <h3>Mathematics</h3>
-            <p>Algebra, Geometry, Calculus</p>
-            <span class="course-books">12 books</span>
-            <span class="course-level">Beginner</span>
-        </div>
-
-        <div class="course-card" onclick="goToCourseDetail('met', 'Methods & Techniques')">
-            <div class="course-icon met">
-                <i class="fas fa-book-reader"></i>
-            </div>
-            <h3>MET</h3>
-            <p>Mechanical Engineering Technology</p>
-            <span class="course-books">8 books</span>
-            <span class="course-level">Beginner</span>
-        </div>
-
-        <div class="course-card" onclick="goToCourseDetail('cs', 'Computer Science')">
-            <div class="course-icon cs">
-                <i class="fas fa-laptop-code"></i>
-            </div>
-            <h3>Computer Science</h3>
-            <p>Programming & Applications</p>
-            <span class="course-books">15 books</span>
-            <span class="course-level">Intermediate</span>
-        </div>
-
-        <div class="course-card" onclick="goToCourseDetail('statistics', 'Statistics')">
-            <div class="course-icon statistics">
-                <i class="fas fa-chart-bar"></i>
-            </div>
-            <h3>Statistics</h3>
-            <p>Data Analysis</p>
-            <span class="course-books">10 books</span>
-            <span class="course-level">Intermediate</span>
-        </div>
-    </section>
-
     <script src="app.js"></script>
+    <script>
+        (function createParticles() {
+            const container = document.getElementById("bssParticles");
+            if (!container) return;
+
+            const particleCount = 26;
+            for (let i = 0; i < particleCount; i += 1) {
+                const particle = document.createElement("span");
+                particle.style.left = Math.random() * 100 + "%";
+                particle.style.animationDuration = 12 + Math.random() * 12 + "s";
+                particle.style.animationDelay = Math.random() * -20 + "s";
+                particle.style.opacity = (0.18 + Math.random() * 0.45).toFixed(2);
+                const size = 4 + Math.random() * 10;
+                particle.style.width = size + "px";
+                particle.style.height = size + "px";
+                container.appendChild(particle);
+            }
+        })();
+    </script>
 </body>
 </html>

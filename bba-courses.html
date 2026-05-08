@@ -4,10 +4,729 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scholar Hub - BBA Courses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bba-bg: #120c08;
+            --bba-panel: rgba(35, 21, 16, 0.8);
+            --bba-panel-strong: rgba(52, 29, 19, 0.94);
+            --bba-line: rgba(255, 216, 174, 0.16);
+            --bba-text: #fff4ea;
+            --bba-soft: #cfb8a7;
+            --bba-gold: #ffbf69;
+            --bba-orange: #ff7b54;
+            --bba-cream: #ffe8cc;
+            --bba-green: #7bd389;
+        }
+
+        body.courses-page.bba-reimagined {
+            margin: 0;
+            padding-bottom: 0;
+            color: var(--bba-text);
+            background:
+                radial-gradient(circle at 10% 10%, rgba(255, 191, 105, 0.17), transparent 25%),
+                radial-gradient(circle at 92% 18%, rgba(255, 123, 84, 0.16), transparent 22%),
+                radial-gradient(circle at 50% 100%, rgba(123, 211, 137, 0.12), transparent 30%),
+                linear-gradient(150deg, #0f0907 0%, #1c120d 45%, #120906 100%);
+            font-family: "Outfit", sans-serif;
+        }
+
+        .bba-shell {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .bba-grain,
+        .bba-lines,
+        .bba-glow,
+        .bba-particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .bba-grain {
+            opacity: 0.08;
+            background-image:
+                radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.7) 0 1px, transparent 1px),
+                radial-gradient(circle at 75% 38%, rgba(255, 255, 255, 0.45) 0 1px, transparent 1px),
+                radial-gradient(circle at 48% 72%, rgba(255, 255, 255, 0.55) 0 1px, transparent 1px);
+            background-size: 160px 160px;
+            animation: bbaNoise 18s linear infinite;
+            z-index: -5;
+        }
+
+        .bba-lines {
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+            z-index: -4;
+        }
+
+        .bba-glow {
+            z-index: -3;
+            filter: blur(18px);
+        }
+
+        .bba-glow::before,
+        .bba-glow::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: bbaFloat 14s ease-in-out infinite;
+        }
+
+        .bba-glow::before {
+            width: 26rem;
+            height: 26rem;
+            top: 3%;
+            left: -8%;
+            background: radial-gradient(circle, rgba(255, 191, 105, 0.36), transparent 70%);
+        }
+
+        .bba-glow::after {
+            width: 30rem;
+            height: 30rem;
+            right: -10%;
+            top: 34%;
+            background: radial-gradient(circle, rgba(255, 123, 84, 0.28), transparent 70%);
+            animation-delay: -5s;
+        }
+
+        .bba-particles {
+            z-index: -2;
+        }
+
+        .bba-particles span {
+            position: absolute;
+            display: block;
+            border-radius: 50%;
+            background: rgba(255, 232, 204, 0.25);
+            box-shadow: 0 0 18px rgba(255, 191, 105, 0.35);
+            animation: bbaRise linear infinite;
+        }
+
+        .bba-page {
+            position: relative;
+            z-index: 1;
+            width: min(1220px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 24px 0 88px;
+        }
+
+        .bba-topbar,
+        .bba-panel,
+        .bba-card,
+        .bba-category,
+        .bba-feature,
+        .bba-story,
+        .bba-banner,
+        .bba-mini,
+        .bba-gallery-card {
+            backdrop-filter: blur(16px);
+            background: linear-gradient(180deg, rgba(48, 28, 20, 0.88), rgba(22, 12, 9, 0.76));
+            border: 1px solid var(--bba-line);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+        }
+
+        .bba-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 12px 14px;
+            border-radius: 28px;
+            position: sticky;
+            top: 14px;
+            z-index: 30;
+            margin-bottom: 24px;
+        }
+
+        .bba-topbar-left,
+        .bba-topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bba-topbar h1,
+        .bba-hero h2,
+        .bba-section-header h3,
+        .bba-card h4,
+        .bba-category h4,
+        .bba-feature h4,
+        .bba-story h4,
+        .bba-gallery-card h4,
+        .bba-mini strong {
+            font-family: "Sora", sans-serif;
+        }
+
+        .bba-topbar h1 {
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            margin: 0;
+            letter-spacing: 0.04em;
+        }
+
+        .bba-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            color: var(--bba-text);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.9rem;
+        }
+
+        .btn-back.bba-back {
+            color: var(--bba-text);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-back.bba-back:hover {
+            color: var(--bba-gold);
+            background: rgba(255, 191, 105, 0.16);
+        }
+
+        .btn-premium-header.bba-premium {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 191, 105, 0.2), rgba(255, 123, 84, 0.2));
+            color: var(--bba-gold);
+            -webkit-text-fill-color: unset;
+            border: 1px solid rgba(255, 191, 105, 0.22);
+        }
+
+        .bba-hero {
+            display: grid;
+            grid-template-columns: 1.04fr 0.96fr;
+            gap: 26px;
+            align-items: stretch;
+            margin-bottom: 28px;
+        }
+
+        .bba-panel {
+            border-radius: 36px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bba-panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(130deg, rgba(255, 255, 255, 0.1), transparent 40%, transparent);
+            pointer-events: none;
+        }
+
+        .bba-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(255, 191, 105, 0.12);
+            color: var(--bba-gold);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            margin-bottom: 18px;
+        }
+
+        .bba-hero h2 {
+            font-size: clamp(2.6rem, 5vw, 4.8rem);
+            line-height: 0.96;
+            margin: 0 0 18px;
+            max-width: 11ch;
+        }
+
+        .bba-shine {
+            background: linear-gradient(135deg, var(--bba-gold), #fff2d8 45%, var(--bba-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bba-hero p,
+        .bba-section-header p,
+        .bba-card p,
+        .bba-category p,
+        .bba-feature p,
+        .bba-story p,
+        .bba-gallery-card p,
+        .bba-mini p {
+            color: var(--bba-soft);
+        }
+
+        .bba-actions,
+        .bba-stats,
+        .bba-meta-row,
+        .bba-tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .bba-cta,
+        .bba-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 52px;
+            padding: 0 20px;
+            border-radius: 16px;
+            font-weight: 700;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        .bba-cta {
+            background: linear-gradient(135deg, var(--bba-gold), #ffd8a8 55%, #fff4ea);
+            color: #2f190f;
+            box-shadow: 0 16px 42px rgba(255, 191, 105, 0.26);
+        }
+
+        .bba-outline {
+            color: var(--bba-text);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .bba-cta:hover,
+        .bba-outline:hover,
+        .bba-card:hover,
+        .bba-category:hover,
+        .bba-feature:hover,
+        .bba-story:hover,
+        .bba-gallery-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .bba-stats {
+            margin-top: 24px;
+        }
+
+        .bba-stat {
+            min-width: 142px;
+            padding: 14px 16px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .bba-stat strong {
+            display: block;
+            font-size: 1.38rem;
+            margin-bottom: 4px;
+        }
+
+        .bba-stat span {
+            color: var(--bba-soft);
+            font-size: 0.9rem;
+        }
+
+        .bba-hero-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .bba-visual {
+            position: relative;
+            min-height: 430px;
+            border-radius: 30px;
+            overflow: hidden;
+            background:
+                linear-gradient(180deg, rgba(9, 4, 2, 0.08), rgba(12, 6, 4, 0.75)),
+                url("https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80") center/cover;
+            box-shadow: inset 0 -120px 100px rgba(14, 7, 4, 0.7);
+        }
+
+        .bba-floating {
+            position: absolute;
+            border-radius: 24px;
+            padding: 16px;
+            background: rgba(20, 10, 7, 0.74);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(12px);
+            animation: bbaDrift 5s ease-in-out infinite;
+        }
+
+        .bba-floating.top {
+            top: 18px;
+            right: 18px;
+            min-width: 180px;
+        }
+
+        .bba-floating.bottom {
+            left: 18px;
+            bottom: 18px;
+            max-width: 220px;
+            animation-delay: -2.2s;
+        }
+
+        .bba-floating strong {
+            display: block;
+            font-size: 1.02rem;
+            margin-bottom: 6px;
+        }
+
+        .bba-floating span,
+        .bba-floating p {
+            color: var(--bba-soft);
+            font-size: 0.88rem;
+            margin: 0;
+        }
+
+        .bba-marquee {
+            overflow: hidden;
+            margin-top: 28px;
+            padding: 14px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .bba-marquee-track {
+            display: flex;
+            gap: 18px;
+            width: max-content;
+            animation: bbaMarquee 24s linear infinite;
+        }
+
+        .bba-marquee-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--bba-text);
+            white-space: nowrap;
+        }
+
+        .bba-section {
+            margin-top: 28px;
+        }
+
+        .bba-section-header {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .bba-section-header h3 {
+            font-size: clamp(1.4rem, 2vw, 2rem);
+            margin-bottom: 6px;
+        }
+
+        .bba-course-grid,
+        .bba-category-grid,
+        .bba-feature-grid,
+        .bba-story-grid,
+        .bba-gallery {
+            display: grid;
+            gap: 18px;
+        }
+
+        .bba-course-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .bba-category-grid,
+        .bba-feature-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .bba-story-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .bba-gallery {
+            grid-template-columns: 1.1fr 0.85fr 0.95fr;
+        }
+
+        .bba-card,
+        .bba-category,
+        .bba-feature,
+        .bba-story,
+        .bba-gallery-card {
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bba-card {
+            cursor: pointer;
+            padding: 18px;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            background-size: cover;
+            background-position: center;
+            isolation: isolate;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .bba-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.03), rgba(17, 8, 6, 0.88));
+            z-index: -1;
+        }
+
+        .bba-card::after {
+            content: "";
+            position: absolute;
+            inset: auto 0 0 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.82), transparent);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .bba-card:hover::after {
+            opacity: 1;
+        }
+
+        .bba-badge {
+            align-self: start;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            font-size: 0.8rem;
+            margin-bottom: auto;
+        }
+
+        .bba-card h4,
+        .bba-category h4,
+        .bba-feature h4,
+        .bba-story h4,
+        .bba-gallery-card h4 {
+            margin: 0 0 8px;
+        }
+
+        .bba-card p,
+        .bba-category p,
+        .bba-feature p,
+        .bba-story p,
+        .bba-gallery-card p {
+            color: rgba(255, 244, 234, 0.8);
+            margin-bottom: 14px;
+        }
+
+        .bba-meta-row {
+            margin-top: auto;
+        }
+
+        .bba-meta,
+        .bba-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            font-size: 0.82rem;
+        }
+
+        .bba-category,
+        .bba-feature,
+        .bba-story,
+        .bba-gallery-card {
+            padding: 22px;
+        }
+
+        .bba-category i,
+        .bba-feature i {
+            width: 50px;
+            height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            background: rgba(255, 191, 105, 0.12);
+            color: var(--bba-gold);
+        }
+
+        .bba-tag {
+            padding: 7px 11px;
+            font-size: 0.78rem;
+            color: var(--bba-soft);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .bba-banner {
+            border-radius: 34px;
+            padding: 24px;
+            margin-top: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bba-banner::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.07), transparent);
+            transform: translateX(-100%);
+            animation: bbaSweep 8s linear infinite;
+        }
+
+        .bba-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .bba-mini {
+            padding: 18px;
+            border-radius: 22px;
+        }
+
+        .bba-mini strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .bba-gallery-card {
+            min-height: 260px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+        }
+
+        .bba-gallery-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(15, 8, 5, 0.84));
+        }
+
+        .bba-gallery-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes bbaDrift {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes bbaFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(26px, -26px) scale(1.08); }
+        }
+
+        @keyframes bbaRise {
+            0% { transform: translateY(110vh) scale(0.8); opacity: 0; }
+            10%, 85% { opacity: 1; }
+            100% { transform: translateY(-15vh) scale(1.2); opacity: 0; }
+        }
+
+        @keyframes bbaMarquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        @keyframes bbaSweep {
+            0% { transform: translateX(-120%); }
+            100% { transform: translateX(120%); }
+        }
+
+        @keyframes bbaNoise {
+            from { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(10px, -8px, 0); }
+            to { transform: translate3d(0, 0, 0); }
+        }
+
+        @media (max-width: 1100px) {
+            .bba-hero,
+            .bba-course-grid,
+            .bba-category-grid,
+            .bba-feature-grid,
+            .bba-gallery,
+            .bba-story-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .bba-hero {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .bba-page {
+                width: min(100% - 20px, 1220px);
+                padding-top: 16px;
+            }
+
+            .bba-topbar {
+                border-radius: 22px;
+                padding: 10px;
+            }
+
+            .bba-chip {
+                display: none;
+            }
+
+            .bba-panel,
+            .bba-banner,
+            .bba-card,
+            .bba-category,
+            .bba-feature,
+            .bba-story,
+            .bba-gallery-card {
+                border-radius: 24px;
+            }
+
+            .bba-hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .bba-course-grid,
+            .bba-category-grid,
+            .bba-feature-grid,
+            .bba-gallery,
+            .bba-story-grid,
+            .bba-mini-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bba-visual {
+                min-height: 330px;
+            }
+        }
+    </style>
 </head>
-<body class="courses-page">
+<body class="courses-page bba-reimagined">
     <div id="loadingOverlay" class="loading-overlay" style="display: none;">
         <div class="loading-content">
             <div class="loading-spinner">
@@ -19,67 +738,307 @@
         </div>
     </div>
 
-    <!-- Header -->
-    <header class="app-header">
-        <div class="header-top">
-            <button class="btn-back" onclick="goBack()">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <h1>BBA Courses</h1>
-            <a href="premium.html" class="btn-premium-header">
-                <i class="fas fa-gem"></i>
-            </a>
-        </div>
-    </header>
+    <div class="bba-shell">
+        <div class="bba-grain"></div>
+        <div class="bba-lines"></div>
+        <div class="bba-glow"></div>
+        <div class="bba-particles" id="bbaParticles"></div>
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-        <a href="home.html">Home</a> / <span>BBA Courses</span>
+        <main class="bba-page">
+            <header class="bba-topbar">
+                <div class="bba-topbar-left">
+                    <button class="btn-back bba-back" onclick="goBack()" aria-label="Go back">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h1>BBA Executive Hub</h1>
+                        <span class="section-subtitle">Finance, management and strategy in a premium format</span>
+                    </div>
+                </div>
+                <div class="bba-topbar-right">
+                    <span class="bba-chip"><i class="fas fa-chart-pie"></i> Business experience</span>
+                    <a href="premium.html" class="btn-premium-header bba-premium" aria-label="Premium access">
+                        <i class="fas fa-gem"></i>
+                    </a>
+                </div>
+            </header>
+
+            <section class="bba-hero">
+                <div class="bba-panel">
+                    <span class="bba-kicker"><i class="fas fa-briefcase"></i> BBA Digital Campus</span>
+                    <h2>Shape a <span class="bba-shine">smarter business</span> learning space.</h2>
+                    <p>
+                        La page BBA a été totalement repensée avec une ambiance plus haut de gamme, plus d’images,
+                        plus d’animations et plusieurs rubriques pour donner une vraie présence aux parcours business.
+                    </p>
+                    <div class="bba-actions">
+                        <a href="#bba-courses" class="bba-cta"><i class="fas fa-compass"></i> Explore tracks</a>
+                        <a href="#bba-categories" class="bba-outline"><i class="fas fa-layer-group"></i> Browse categories</a>
+                    </div>
+                    <div class="bba-stats">
+                        <div class="bba-stat">
+                            <strong>04</strong>
+                            <span>Core disciplines</span>
+                        </div>
+                        <div class="bba-stat">
+                            <strong>900+</strong>
+                            <span>Learner sessions</span>
+                        </div>
+                        <div class="bba-stat">
+                            <strong>Elite</strong>
+                            <span>Executive mood</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bba-hero-visual">
+                    <div class="bba-visual">
+                        <div class="bba-floating top">
+                            <strong>Business Zones</strong>
+                            <span>Finance, marketing, leadership, accounting</span>
+                        </div>
+                        <div class="bba-floating bottom">
+                            <strong>Premium presentation</strong>
+                            <p>Photos, glass cards, polished motion and multi-section storytelling.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="bba-marquee">
+                <div class="bba-marquee-track">
+                    <span class="bba-marquee-item"><i class="fas fa-chart-line"></i> Executive aesthetics</span>
+                    <span class="bba-marquee-item"><i class="fas fa-image"></i> Rich visuals</span>
+                    <span class="bba-marquee-item"><i class="fas fa-wave-square"></i> Animated layers</span>
+                    <span class="bba-marquee-item"><i class="fas fa-briefcase"></i> Career-oriented sections</span>
+                    <span class="bba-marquee-item"><i class="fas fa-th-large"></i> Multiple categories</span>
+                    <span class="bba-marquee-item"><i class="fas fa-crown"></i> Premium interface</span>
+                    <span class="bba-marquee-item"><i class="fas fa-chart-line"></i> Executive aesthetics</span>
+                    <span class="bba-marquee-item"><i class="fas fa-image"></i> Rich visuals</span>
+                    <span class="bba-marquee-item"><i class="fas fa-wave-square"></i> Animated layers</span>
+                    <span class="bba-marquee-item"><i class="fas fa-briefcase"></i> Career-oriented sections</span>
+                </div>
+            </div>
+
+            <section class="bba-section" id="bba-courses">
+                <div class="bba-section-header">
+                    <div>
+                        <h3>Main Courses</h3>
+                        <p>Les matières BBA sont mises en avant comme de vrais univers avec une identité propre et plus de présence visuelle.</p>
+                    </div>
+                </div>
+
+                <div class="bba-course-grid">
+                    <article class="bba-card" onclick="goToCourseDetail('finance', 'Finance')" style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1000&q=80');">
+                        <span class="bba-badge"><i class="fas fa-coins"></i> Capital Track</span>
+                        <h4>Finance</h4>
+                        <p>Financial strategy, valuation, investments and decision-making for future analysts and leaders.</p>
+                        <div class="bba-meta-row">
+                            <span class="bba-meta"><i class="fas fa-book"></i> 14 books</span>
+                            <span class="bba-meta"><i class="fas fa-signal"></i> Advanced</span>
+                        </div>
+                    </article>
+
+                    <article class="bba-card" onclick="goToCourseDetail('marketing', 'Marketing')" style="background-image: url('https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=1000&q=80');">
+                        <span class="bba-badge"><i class="fas fa-bullhorn"></i> Brand Track</span>
+                        <h4>Marketing</h4>
+                        <p>Campaigns, positioning, consumer behavior and digital growth strategies.</p>
+                        <div class="bba-meta-row">
+                            <span class="bba-meta"><i class="fas fa-book"></i> 11 books</span>
+                            <span class="bba-meta"><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+                    </article>
+
+                    <article class="bba-card" onclick="goToCourseDetail('management', 'Management')" style="background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1000&q=80');">
+                        <span class="bba-badge"><i class="fas fa-project-diagram"></i> Leadership Track</span>
+                        <h4>Management</h4>
+                        <p>Leadership, team coordination, project systems and organizational performance.</p>
+                        <div class="bba-meta-row">
+                            <span class="bba-meta"><i class="fas fa-book"></i> 13 books</span>
+                            <span class="bba-meta"><i class="fas fa-signal"></i> Advanced</span>
+                        </div>
+                    </article>
+
+                    <article class="bba-card" onclick="goToCourseDetail('accounting', 'Accounting')" style="background-image: url('https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1000&q=80');">
+                        <span class="bba-badge"><i class="fas fa-calculator"></i> Control Track</span>
+                        <h4>Accounting</h4>
+                        <p>Audit, reporting, corporate records and structured financial oversight.</p>
+                        <div class="bba-meta-row">
+                            <span class="bba-meta"><i class="fas fa-book"></i> 12 books</span>
+                            <span class="bba-meta"><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="bba-section" id="bba-categories">
+                <div class="bba-section-header">
+                    <div>
+                        <h3>Rubrics & Categories</h3>
+                        <p>Des rubriques supplémentaires structurent l’expérience pour la rendre plus riche, plus sérieuse et plus moderne.</p>
+                    </div>
+                </div>
+
+                <div class="bba-category-grid">
+                    <article class="bba-category">
+                        <i class="fas fa-sack-dollar"></i>
+                        <h4>Money Systems</h4>
+                        <p>Les fondamentaux de la valeur, de la rentabilité, de la gestion financière et des investissements.</p>
+                        <div class="bba-tag-row">
+                            <span class="bba-tag">Finance</span>
+                            <span class="bba-tag">Risk</span>
+                            <span class="bba-tag">Valuation</span>
+                        </div>
+                    </article>
+
+                    <article class="bba-category">
+                        <i class="fas fa-megaphone"></i>
+                        <h4>Market Influence</h4>
+                        <p>Une catégorie pensée pour la communication, le branding, le digital et l’impact commercial.</p>
+                        <div class="bba-tag-row">
+                            <span class="bba-tag">Brand</span>
+                            <span class="bba-tag">Digital</span>
+                            <span class="bba-tag">Growth</span>
+                        </div>
+                    </article>
+
+                    <article class="bba-category">
+                        <i class="fas fa-building"></i>
+                        <h4>Business Control</h4>
+                        <p>Management, gouvernance, pilotage et contrôle des organisations dans une même zone.</p>
+                        <div class="bba-tag-row">
+                            <span class="bba-tag">Leadership</span>
+                            <span class="bba-tag">Audit</span>
+                            <span class="bba-tag">Strategy</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="bba-banner">
+                <div class="bba-section-header">
+                    <div>
+                        <h3>What Changed</h3>
+                        <p>La page n’est plus une simple grille: elle devient une expérience éditoriale business plus intense.</p>
+                    </div>
+                </div>
+
+                <div class="bba-mini-grid">
+                    <div class="bba-mini">
+                        <strong>Executive atmosphere</strong>
+                        <p>Palette chaude, glow subtil, texture et ambiance plus premium orientée business.</p>
+                    </div>
+                    <div class="bba-mini">
+                        <strong>Large image cards</strong>
+                        <p>Chaque matière possède une grande carte illustrée avec un angle plus immersif.</p>
+                    </div>
+                    <div class="bba-mini">
+                        <strong>More structure</strong>
+                        <p>Ajout de catégories, highlights, galerie et rubriques narratives pour enrichir l’exploration.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bba-section">
+                <div class="bba-section-header">
+                    <div>
+                        <h3>Learning Experience</h3>
+                        <p>Des blocs complémentaires viennent soutenir l’idée d’un hub business plus ambitieux et plus vivant.</p>
+                    </div>
+                </div>
+
+                <div class="bba-feature-grid">
+                    <article class="bba-feature">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Fluid Access</h4>
+                        <p>Les parcours restent faciles à ouvrir avec une lecture plus claire et une hiérarchie plus forte.</p>
+                    </article>
+                    <article class="bba-feature">
+                        <i class="fas fa-ranking-star"></i>
+                        <h4>Premium Feel</h4>
+                        <p>L’esthétique donne une impression de plateforme business haut de gamme plutôt qu’un simple listing.</p>
+                    </article>
+                    <article class="bba-feature">
+                        <i class="fas fa-network-wired"></i>
+                        <h4>Deeper Content</h4>
+                        <p>Les sections multiples donnent plus d’ampleur et rendent la page plus riche à parcourir.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="bba-section">
+                <div class="bba-section-header">
+                    <div>
+                        <h3>Discovery Gallery</h3>
+                        <p>Une galerie d’images prolonge l’univers business et renforce la sensation d’une page plus dense et plus complète.</p>
+                    </div>
+                </div>
+
+                <div class="bba-gallery">
+                    <article class="bba-gallery-card" style="background-image: url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80');">
+                        <h4>Strategy Rooms</h4>
+                        <p>Spaces for planning, negotiation and decision-making exercises.</p>
+                    </article>
+                    <article class="bba-gallery-card" style="background-image: url('https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1200&q=80');">
+                        <h4>Team Sessions</h4>
+                        <p>Collaborative management and leadership perspectives.</p>
+                    </article>
+                    <article class="bba-gallery-card" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80');">
+                        <h4>Growth Analytics</h4>
+                        <p>Performance dashboards, reports and business insight workflows.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="bba-section">
+                <div class="bba-section-header">
+                    <div>
+                        <h3>Student Stories</h3>
+                        <p>Des rubriques narratives ajoutent une touche plus humaine et plus premium au parcours.</p>
+                    </div>
+                </div>
+
+                <div class="bba-story-grid">
+                    <article class="bba-story">
+                        <h4>Build an executive mindset</h4>
+                        <p>Commence par la finance ou le marketing, renforce ton sens stratégique, puis élargis vers le management et le contrôle.</p>
+                        <div class="bba-tag-row">
+                            <span class="bba-tag"><i class="fas fa-route"></i> Career path</span>
+                            <span class="bba-tag"><i class="fas fa-briefcase"></i> Practical focus</span>
+                        </div>
+                    </article>
+                    <article class="bba-story">
+                        <h4>Study in a premium space</h4>
+                        <p>Les animations restent présentes pour rendre la page plus dynamique, tout en gardant un rendu propre et crédible.</p>
+                        <div class="bba-tag-row">
+                            <span class="bba-tag"><i class="fas fa-mobile-screen"></i> Responsive</span>
+                            <span class="bba-tag"><i class="fas fa-sparkles"></i> Polished motion</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
     </div>
 
-    <!-- Courses Grid -->
-    <section class="courses-container">
-        <div class="course-card" onclick="goToCourseDetail('finance', 'Finance')">
-            <div class="course-icon finance">
-                <i class="fas fa-coins"></i>
-            </div>
-            <h3>Finance</h3>
-            <p>Financial Management & Investments</p>
-            <span class="course-books">14 books</span>
-            <span class="course-level">Advanced</span>
-        </div>
-
-        <div class="course-card" onclick="goToCourseDetail('marketing', 'Marketing')">
-            <div class="course-icon marketing">
-                <i class="fas fa-bullhorn"></i>
-            </div>
-            <h3>Marketing</h3>
-            <p>Strategies & Campaigns</p>
-            <span class="course-books">11 books</span>
-            <span class="course-level">Intermediate</span>
-        </div>
-
-        <div class="course-card" onclick="goToCourseDetail('management', 'Management')">
-            <div class="course-icon management">
-                <i class="fas fa-project-diagram"></i>
-            </div>
-            <h3>Management</h3>
-            <p>Leadership & Organization</p>
-            <span class="course-books">13 books</span>
-            <span class="course-level">Advanced</span>
-        </div>
-
-        <div class="course-card" onclick="goToCourseDetail('accounting', 'Accounting')">
-            <div class="course-icon accounting">
-                <i class="fas fa-calculator"></i>
-            </div>
-            <h3>Accounting</h3>
-            <p>Accounting & Audit</p>
-            <span class="course-books">12 books</span>
-            <span class="course-level">Intermediate</span>
-        </div>
-    </section>
-
     <script src="app.js"></script>
+    <script>
+        (function createParticles() {
+            const container = document.getElementById("bbaParticles");
+            if (!container) return;
+
+            const particleCount = 24;
+            for (let i = 0; i < particleCount; i += 1) {
+                const particle = document.createElement("span");
+                particle.style.left = Math.random() * 100 + "%";
+                particle.style.animationDuration = 12 + Math.random() * 12 + "s";
+                particle.style.animationDelay = Math.random() * -20 + "s";
+                particle.style.opacity = (0.15 + Math.random() * 0.4).toFixed(2);
+                const size = 4 + Math.random() * 10;
+                particle.style.width = size + "px";
+                particle.style.height = size + "px";
+                container.appendChild(particle);
+            }
+        })();
+    </script>
 </body>
 </html>
